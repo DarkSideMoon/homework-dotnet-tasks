@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Docu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Host", "src\Metrics.DotNet.Samples.Host\Metrics.DotNet.Samples.Host.csproj", "{4CD0BC28-1FBE-401A-9930-BA29CA0B9066}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Services", "src\Metrics.DotNet.Samples.Services\Metrics.DotNet.Samples.Services.csproj", "{3443FF6C-F8C1-410B-BB99-845678C2A0F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{4CD0BC28-1FBE-401A-9930-BA29CA0B9066}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4CD0BC28-1FBE-401A-9930-BA29CA0B9066}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4CD0BC28-1FBE-401A-9930-BA29CA0B9066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +52,7 @@ Global
 		{EDAE7BBE-E180-4ACC-9FF3-626B88BBC923} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{B26ADECF-EFA7-49F0-9573-5BD89ADF2762} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{4CD0BC28-1FBE-401A-9930-BA29CA0B9066} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
+		{3443FF6C-F8C1-410B-BB99-845678C2A0F3} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}

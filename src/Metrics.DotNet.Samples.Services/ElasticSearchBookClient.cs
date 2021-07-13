@@ -1,0 +1,67 @@
+﻿using Metrics.DotNet.Samples.Documents;
+using Metrics.DotNet.Samples.Services.Settings;
+using Microsoft.Extensions.Options;
+using Nest;
+using Serilog;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace Metrics.DotNet.Samples.Services
+{
+    public class ElasticSearchBookClient : IElasticSearchBookClient
+    {
+        private readonly ILogger _logger = Log.ForContext<ElasticSearchBookClient>();
+
+        private readonly ElasticClient _client;
+        private readonly IOptionsMonitor<ElasticSearchSetting> _setting;
+
+        public ElasticSearchBookClient(IOptionsMonitor<ElasticSearchSetting> setting)
+        {
+            _setting = setting;
+
+            var connectionSettings = new ConnectionSettings(new Uri(setting.CurrentValue.Uri));
+            connectionSettings.DefaultIndex(setting.CurrentValue.IndexName);
+
+            _client = new ElasticClient(connectionSettings);
+        }
+
+        public Task<IndexResponse> Add(BookDocument data)
+        {
+            // https://stackoverflow.com/questions/53039564/what-is-the-difference-between-createasync-and-indexasync-methods-on-elasticsear
+            //var res = _client.CreateDocumentAsync(data);
+            return _client.IndexDocumentAsync(data);
+        }
+
+        public async Task<ISearchResponse<BookDocument>> Search(BookDocument search)
+        {
+            return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
+        }
+
+        public BulkResponse BulkUpdate(List<BookDocument> data)
+        {
+            try
+            {
+                var bulkDescriptor = new BulkDescriptor();
+                foreach (var item in data)
+                {
+                    var updateDescriptor = new BulkUpdateDescriptor<BookDocument, BookDocument>()
+                        .Index(_setting.CurrentValue.IndexName)
+                        .Id(item.Id)
+                        .Doc(item)
+                        .DocAsUpsert()
+                        .RetriesOnConflict(1);
+
+                    bulkDescriptor.AddOperation(updateDescriptor);
+                }
+
+                return _client.Bulk(bulkDescriptor);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "Could not bulk update book data in elasticsearch");
+                throw;
+            }
+        }
+    }
+}

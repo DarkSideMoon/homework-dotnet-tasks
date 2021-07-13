@@ -9,4 +9,8 @@
     <PackageReference Include="Bogus" Version="33.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Metrics.DotNet.Samples.Services\Metrics.DotNet.Samples.Services.csproj" />
+  </ItemGroup>
+
 </Project>
