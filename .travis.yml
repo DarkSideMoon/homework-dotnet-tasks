@@ -1,0 +1,11 @@
+language: csharp
+dist: xenial
+sudo: required
+solution: Metrics.DotNet.Samples.sln
+mono: none
+dotnet: 5.0
+
+script:
+ - dotnet --info
+ - dotnet restore
+ - dotnet build
