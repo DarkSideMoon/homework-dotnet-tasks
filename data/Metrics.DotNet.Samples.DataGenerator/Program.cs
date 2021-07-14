@@ -6,7 +6,11 @@ namespace Metrics.DotNet.Samples.DataGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Generate random data!");
+
+            var elasticData = FakeData.BookDocument.Generate(100000);
+
+            Console.ReadLine();
         }
     }
 }
