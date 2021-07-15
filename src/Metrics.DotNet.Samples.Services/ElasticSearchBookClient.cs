@@ -14,14 +14,14 @@ namespace Metrics.DotNet.Samples.Services
         private readonly ILogger _logger = Log.ForContext<ElasticSearchBookClient>();
 
         private readonly ElasticClient _client;
-        private readonly IOptionsMonitor<ElasticSearchSetting> _setting;
+        private readonly IOptions<ElasticSearchSetting> _setting;
 
-        public ElasticSearchBookClient(IOptionsMonitor<ElasticSearchSetting> setting)
+        public ElasticSearchBookClient(IOptions<ElasticSearchSetting> setting)
         {
             _setting = setting;
 
-            var connectionSettings = new ConnectionSettings(new Uri(setting.CurrentValue.Uri));
-            connectionSettings.DefaultIndex(setting.CurrentValue.IndexName);
+            var connectionSettings = new ConnectionSettings(new Uri(setting.Value.Uri));
+            connectionSettings.DefaultIndex(setting.Value.IndexName);
 
             _client = new ElasticClient(connectionSettings);
         }
@@ -46,7 +46,7 @@ namespace Metrics.DotNet.Samples.Services
                 foreach (var item in data)
                 {
                     var updateDescriptor = new BulkUpdateDescriptor<BookDocument, BookDocument>()
-                        .Index(_setting.CurrentValue.IndexName)
+                        .Index(_setting.Value.IndexName)
                         .Id(item.Id)
                         .Doc(item)
                         .DocAsUpsert()
