@@ -42,8 +42,10 @@ namespace Metrics.DotNet.Samples.Host
 
             services.AddOptions();
             services.Configure<ElasticSearchSetting>(Configuration.GetSection("elasticSearchSetting"));
+            services.Configure<MongoSettings>(Configuration.GetSection("mongoSettings"));
 
             services.AddTransient<IElasticSearchBookClient, ElasticSearchBookClient>();
+            services.AddTransient<IMongoDbBookClient, MongoDbBookClient>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

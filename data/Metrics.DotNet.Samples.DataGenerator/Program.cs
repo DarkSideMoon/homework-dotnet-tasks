@@ -2,6 +2,7 @@
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.Extensions.Options;
 using System;
+using System.Threading.Tasks;
 
 namespace Metrics.DotNet.Samples.DataGenerator
 {
@@ -9,7 +10,7 @@ namespace Metrics.DotNet.Samples.DataGenerator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Generate random data!");
+            Console.WriteLine("Generate random data for elastic search!");
 
             var settings = Options.Create(new ElasticSearchSetting
             {
@@ -23,7 +24,23 @@ namespace Metrics.DotNet.Samples.DataGenerator
                 elasticClient.BulkUpdate(elasticData);
             }
 
+            Console.WriteLine("Generate random data for mongodb!");
 
+            var mongoSettings = Options.Create(new MongoSettings
+            {
+                DatabaseName = "books",
+                CollectionName = "book",
+                Uri = "mongodb://127.0.0.1:27017"
+            });
+            var mongoClient = new MongoDbBookClient(mongoSettings);
+
+            for (var i = 0; i < 10; i++)
+            {
+                var mongoData = FakeData.Book.Generate(1000);
+                Task.Run(async () => await mongoClient.SetBooks(mongoData));
+            }
+
+            Console.WriteLine("Random data was generated successfully!");
             Console.ReadLine();
         }
     }

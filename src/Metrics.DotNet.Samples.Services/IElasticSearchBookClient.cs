@@ -9,7 +9,7 @@ namespace Metrics.DotNet.Samples.Services
     {
         Task<IndexResponse> Add(BookDocument data);
 
-        Task<ISearchResponse<BookDocument>> Search(BookDocument search);
+        Task<ISearchResponse<BookDocument>> Search(string title);
 
         BulkResponse BulkUpdate(List<BookDocument> data);
     }

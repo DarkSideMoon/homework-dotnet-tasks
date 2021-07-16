@@ -33,10 +33,17 @@ namespace Metrics.DotNet.Samples.Services
             return _client.IndexDocumentAsync(data);
         }
 
-        public async Task<ISearchResponse<BookDocument>> Search(BookDocument search)
+        public async Task<ISearchResponse<BookDocument>> Search(string title)
         {
-            return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
+            return _client.Search<BookDocument>(s => s.Query(q => q.Match(m => m.Field(f => f.Title).Query(title))));
+            //return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
         }
+
+        //public async Task<ISearchResponse<BookDocument>> Search(BookDocument search)
+        //{
+        //    return _client.Search<BookDocument>(s => s.Query(q => q.Match(m => m.Field(f => f.Title).Query(search.Title))));
+        //    //return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
+        //}
 
         public BulkResponse BulkUpdate(List<BookDocument> data)
         {

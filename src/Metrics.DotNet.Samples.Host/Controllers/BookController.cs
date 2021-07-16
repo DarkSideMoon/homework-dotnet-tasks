@@ -1,4 +1,4 @@
-﻿using Metrics.DotNet.Samples.Host.Models;
+﻿using Metrics.DotNet.Samples.Contracts;
 using Metrics.DotNet.Samples.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,10 +11,12 @@ namespace Metrics.DotNet.Samples.Host.Controllers
     public class BookController : ControllerBase
     {
         private readonly IElasticSearchBookClient _elasticSearchClient;
+        private readonly IMongoDbBookClient _mongoDbClient;
 
-        public BookController(IElasticSearchBookClient elasticSearchClient)
+        public BookController(IElasticSearchBookClient elasticSearchClient, IMongoDbBookClient mongoDbClient)
         {
             _elasticSearchClient = elasticSearchClient;
+            _mongoDbClient = mongoDbClient;
         }
 
         /// <summary>
@@ -25,7 +27,8 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBook(Guid id)
         {
-            return Ok();
+            var result = await _mongoDbClient.GetBook(id);
+            return Ok(result);
         }
 
         /// <summary>
@@ -35,7 +38,8 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         [HttpGet("all")]
         public async Task<IActionResult> GetAllBooks()
         {
-            return Ok();
+            var result = await _mongoDbClient.GetAllBooks();
+            return Ok(result);
         }
 
         /// <summary>
@@ -44,20 +48,22 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         /// <param name="book"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> SetBook(BookRequest book)
+        public async Task<IActionResult> SetBook(Book book)
         {
+            await _mongoDbClient.SetBook(book);
             return Ok();
         }
 
         /// <summary>
         /// Search books by params
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="title"></param>
         /// <returns></returns>
-        [HttpPost("search/{id}")]
-        public async Task<IActionResult> SearchBook(Guid id)
+        [HttpPost("search/{title}")]
+        public async Task<IActionResult> Search(string title)
         {
-            return Ok();
+            var result = await _elasticSearchClient.Search(title);
+            return Ok(result);
         }
     }
 }
