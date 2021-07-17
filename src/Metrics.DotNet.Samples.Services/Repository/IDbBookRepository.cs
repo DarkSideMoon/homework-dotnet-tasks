@@ -3,13 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Metrics.DotNet.Samples.Services
+namespace Metrics.DotNet.Samples.Services.Repository
 {
-    public interface IMongoDbBookClient
+    public interface IDbBookRepository
     {
         Task<Book> GetBook(Guid id);
 
-        Task<List<Book>> GetAllBooks();
+        Task<IEnumerable<Book>> GetAllBooks();
 
         Task SetBook(Book book);
 

@@ -1,4 +1,5 @@
-using Metrics.DotNet.Samples.Services;
+using Metrics.DotNet.Samples.Services.Client;
+using Metrics.DotNet.Samples.Services.Repository;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,6 +29,11 @@ namespace Metrics.DotNet.Samples.Host
                     Title = "Metrics.DotNet.Samples.Host",
                     Version = "v1",
                     Description = "Metrics sample project",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "DarkSideMoon",
+                        Url = new Uri("https://github.com/DarkSideMoon")
+                    },
                     License = new OpenApiLicense
                     {
                         Name = "Use under MIT licenses",
@@ -41,11 +47,12 @@ namespace Metrics.DotNet.Samples.Host
             });
 
             services.AddOptions();
-            services.Configure<ElasticSearchSetting>(Configuration.GetSection("elasticSearchSetting"));
-            services.Configure<MongoSettings>(Configuration.GetSection("mongoSettings"));
+            services.Configure<ElasticSearchSetting>(Configuration.GetSection("elasticSearch"));
+            services.Configure<MongoSettings>(Configuration.GetSection("mongo"));
+            services.Configure<PostgresSettings>(Configuration.GetSection("postgres"));
 
             services.AddTransient<IElasticSearchBookClient, ElasticSearchBookClient>();
-            services.AddTransient<IMongoDbBookClient, MongoDbBookClient>();
+            services.AddTransient<IMongoDbBookRepository, MongoDbBookRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

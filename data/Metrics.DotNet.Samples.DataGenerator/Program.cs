@@ -1,4 +1,5 @@
-﻿using Metrics.DotNet.Samples.Services;
+﻿using Metrics.DotNet.Samples.Services.Client;
+using Metrics.DotNet.Samples.Services.Repository;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.Extensions.Options;
 using System;
@@ -32,13 +33,16 @@ namespace Metrics.DotNet.Samples.DataGenerator
                 CollectionName = "book",
                 Uri = "mongodb://127.0.0.1:27017"
             });
-            var mongoClient = new MongoDbBookClient(mongoSettings);
+            var mongoClient = new MongoDbBookRepository(mongoSettings);
 
             for (var i = 0; i < 10; i++)
             {
                 var mongoData = FakeData.Book.Generate(1000);
                 Task.Run(async () => await mongoClient.SetBooks(mongoData));
             }
+
+            // Console.WriteLine("Generate random data for postgres!");
+
 
             Console.WriteLine("Random data was generated successfully!");
             Console.ReadLine();

@@ -3,7 +3,7 @@ using Nest;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Metrics.DotNet.Samples.Services
+namespace Metrics.DotNet.Samples.Services.Client
 {
     public interface IElasticSearchBookClient
     {

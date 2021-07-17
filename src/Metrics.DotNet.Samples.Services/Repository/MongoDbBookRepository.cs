@@ -7,14 +7,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Metrics.DotNet.Samples.Services
+namespace Metrics.DotNet.Samples.Services.Repository
 {
-    public class MongoDbBookClient : IMongoDbBookClient
+    public class MongoDbBookRepository : IMongoDbBookRepository
     {
         private readonly IOptions<MongoSettings> _setting;
         private readonly IMongoDatabase _mongoDb;
 
-        public MongoDbBookClient(IOptions<MongoSettings> setting)
+        public MongoDbBookRepository(IOptions<MongoSettings> setting)
         {
             _setting = setting;
 
@@ -22,7 +22,7 @@ namespace Metrics.DotNet.Samples.Services
             _mongoDb = dbClient.GetDatabase(setting.Value.DatabaseName);
         }
 
-        public async Task<List<Book>> GetAllBooks()
+        public async Task<IEnumerable<Book>> GetAllBooks()
         {
             var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
             return await collection.Find(new BsonDocument()).ToListAsync();
