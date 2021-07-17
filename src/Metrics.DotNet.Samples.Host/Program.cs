@@ -1,3 +1,4 @@
+using App.Metrics.AspNetCore;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -38,6 +39,7 @@ namespace Metrics.DotNet.Samples.Host
              })
             .UseStartup<Startup>()
             .UseSerilog()
+            .UseMetrics()
             .Build();
     }
 }

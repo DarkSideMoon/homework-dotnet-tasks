@@ -1,10 +1,13 @@
+using HealthChecks.UI.Client;
 using Metrics.DotNet.Samples.Services.Client;
 using Metrics.DotNet.Samples.Services.Repository;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System;
 
@@ -53,9 +56,26 @@ namespace Metrics.DotNet.Samples.Host
 
             services.AddTransient<IElasticSearchBookClient, ElasticSearchBookClient>();
             services.AddTransient<IMongoDbBookRepository, MongoDbBookRepository>();
+
+            services.AddHealthChecksUI(x =>
+            {
+                x.SetHeaderText("Metrics.DotNet.Samples.Host Health Checks Status");
+                x.AddHealthCheckEndpoint("Base health check", "/healthcheck");
+                x.AddHealthCheckEndpoint("Db health check", "/healthcheck/db");
+            }).AddInMemoryStorage();
+
+            services.AddHealthChecks()
+                .AddCheck("base", () => HealthCheckResult.Healthy("Service is healthy!"), tags: new[] { "base" })
+                .AddNpgSql(Configuration["postgres:connectionString"], tags: new string[] { "db", "sql", "postgreSql" })
+                .AddMongoDb(Configuration["mongo:connectionString"], tags: new string[] { "db", "document", "mongoDb" })
+                .AddElasticsearch(Configuration["elasticSearch:uri"], tags: new string[] { "db", "elasticsearch" })
+
+                //.AddProcessHealthCheck(System.Reflection.Assembly.GetEntryAssembly().FullName, p => p.Length > 0, tags: new string[] { "base" })
+                //.AddRedis(Configuration["Data:ConnectionStrings:Redis"]);
+                ;
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Metrics.DotNet.Samples.Host v1"));
@@ -67,6 +87,19 @@ namespace Metrics.DotNet.Samples.Host
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecksUI(x => x.AddCustomStylesheet("style/dotnet.css"));
+
+                endpoints.MapHealthChecks("/healthcheck", new HealthCheckOptions()
+                {
+                    Predicate = (check) => check.Tags.Contains("base"),
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+
+                endpoints.MapHealthChecks("/healthcheck/db", new HealthCheckOptions()
+                {
+                    Predicate = (check) => check.Tags.Contains("db"),
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
             });
         }
     }

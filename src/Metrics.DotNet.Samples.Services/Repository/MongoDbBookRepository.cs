@@ -18,7 +18,7 @@ namespace Metrics.DotNet.Samples.Services.Repository
         {
             _setting = setting;
 
-            var dbClient = new MongoClient(setting.Value.Uri);
+            var dbClient = new MongoClient(setting.Value.ConnectionString);
             _mongoDb = dbClient.GetDatabase(setting.Value.DatabaseName);
         }
 

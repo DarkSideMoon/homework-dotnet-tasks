@@ -31,7 +31,7 @@ namespace Metrics.DotNet.Samples.DataGenerator
             {
                 DatabaseName = "books",
                 CollectionName = "book",
-                Uri = "mongodb://127.0.0.1:27017"
+                ConnectionString = "mongodb://127.0.0.1:27017"
             });
             var mongoClient = new MongoDbBookRepository(mongoSettings);
 

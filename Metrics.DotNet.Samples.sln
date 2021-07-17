@@ -7,15 +7,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{2DFE2A42-870
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "data", "data", "{865FB815-E037-4C38-9920-BDEA3D310596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.DataGenerator", "data\Metrics.DotNet.Samples.DataGenerator\Metrics.DotNet.Samples.DataGenerator.csproj", "{4C6E733C-A9C2-4590-BEEB-26130E19F07B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.DataGenerator", "data\Metrics.DotNet.Samples.DataGenerator\Metrics.DotNet.Samples.DataGenerator.csproj", "{4C6E733C-A9C2-4590-BEEB-26130E19F07B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Contracts", "src\Metrics.DotNet.Samples.Contracts\Metrics.DotNet.Samples.Contracts.csproj", "{EDAE7BBE-E180-4ACC-9FF3-626B88BBC923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.Contracts", "src\Metrics.DotNet.Samples.Contracts\Metrics.DotNet.Samples.Contracts.csproj", "{EDAE7BBE-E180-4ACC-9FF3-626B88BBC923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Documents", "src\Metrics.DotNet.Samples.Documents\Metrics.DotNet.Samples.Documents.csproj", "{B26ADECF-EFA7-49F0-9573-5BD89ADF2762}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.Documents", "src\Metrics.DotNet.Samples.Documents\Metrics.DotNet.Samples.Documents.csproj", "{B26ADECF-EFA7-49F0-9573-5BD89ADF2762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Host", "src\Metrics.DotNet.Samples.Host\Metrics.DotNet.Samples.Host.csproj", "{4CD0BC28-1FBE-401A-9930-BA29CA0B9066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.Host", "src\Metrics.DotNet.Samples.Host\Metrics.DotNet.Samples.Host.csproj", "{4CD0BC28-1FBE-401A-9930-BA29CA0B9066}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Services", "src\Metrics.DotNet.Samples.Services\Metrics.DotNet.Samples.Services.csproj", "{3443FF6C-F8C1-410B-BB99-845678C2A0F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.Services", "src\Metrics.DotNet.Samples.Services\Metrics.DotNet.Samples.Services.csproj", "{3443FF6C-F8C1-410B-BB99-845678C2A0F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "external", "external", "{B8AEE176-6810-4CC9-9C00-4C2BE93485FE}"
+	ProjectSection(SolutionItems) = preProject
+		.travis.yml = .travis.yml
+		appveyor.yml = appveyor.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{6FADB897-591A-490C-ACA9-209DDB0E8E17}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet-core-linux.yml = .github\workflows\dotnet-core-linux.yml
+		.github\workflows\dotnet-core-windows.yml = .github\workflows\dotnet-core-windows.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +65,7 @@ Global
 		{B26ADECF-EFA7-49F0-9573-5BD89ADF2762} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{4CD0BC28-1FBE-401A-9930-BA29CA0B9066} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{3443FF6C-F8C1-410B-BB99-845678C2A0F3} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
+		{6FADB897-591A-490C-ACA9-209DDB0E8E17} = {B8AEE176-6810-4CC9-9C00-4C2BE93485FE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}
