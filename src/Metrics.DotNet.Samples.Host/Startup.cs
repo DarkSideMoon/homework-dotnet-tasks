@@ -1,10 +1,11 @@
+using App.Metrics;
+using App.Metrics.Formatters.InfluxDB;
 using HealthChecks.UI.Client;
 using Metrics.DotNet.Samples.Services.Client;
 using Metrics.DotNet.Samples.Services.Repository;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -69,10 +70,30 @@ namespace Metrics.DotNet.Samples.Host
                 .AddNpgSql(Configuration["postgres:connectionString"], tags: new string[] { "db", "sql", "postgreSql" })
                 .AddMongoDb(Configuration["mongo:connectionString"], tags: new string[] { "db", "document", "mongoDb" })
                 .AddElasticsearch(Configuration["elasticSearch:uri"], tags: new string[] { "db", "elasticsearch" })
-
                 //.AddProcessHealthCheck(System.Reflection.Assembly.GetEntryAssembly().FullName, p => p.Length > 0, tags: new string[] { "base" })
                 //.AddRedis(Configuration["Data:ConnectionStrings:Redis"]);
                 ;
+
+            var influxDbSettings = Configuration.GetSection("influxDb").Get<InfluxSettings>();
+            var metrics = AppMetrics.CreateDefaultBuilder()
+                .Report.ToInfluxDb(
+                options =>
+                {
+                    options.InfluxDb.BaseUri = new Uri(influxDbSettings.Uri);
+                    options.InfluxDb.Database = influxDbSettings.Database;
+                    options.InfluxDb.Consistenency = "consistency";
+                    options.InfluxDb.UserName = influxDbSettings.UserName;
+                    options.InfluxDb.Password = influxDbSettings.Password;
+                    options.InfluxDb.RetentionPolicy = "rp";
+                    options.InfluxDb.CreateDataBaseIfNotExists = true;
+                    options.HttpPolicy.BackoffPeriod = TimeSpan.FromSeconds(30);
+                    options.HttpPolicy.FailuresBeforeBackoff = 5;
+                    options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
+                    options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
+                    options.FlushInterval = TimeSpan.FromSeconds(20);
+                }).Build();
+
+            services.AddMetrics(metrics);
         }
 
         public void Configure(IApplicationBuilder app)

@@ -23,3 +23,8 @@ Greate guide you can find here: https://www.app-metrics.io/web-monitoring/aspnet
  - App metrics in json -> http://localhost:5000/metrics
  - App metrics in text -> http://localhost:5000/metrics-text
  - App metrics current environment -> http://localhost:5000/env
+
+## Up and runnnig TIG stack
+I am using this TIG stack (Telegraf, InfluxDb, Grafana) from https://github.com/nicolargo/docker-influxdb-grafana
+Also, I make some changes. 
+All stuff you can find in folder `environment`

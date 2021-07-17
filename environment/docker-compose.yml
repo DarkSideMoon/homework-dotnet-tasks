@@ -1,0 +1,82 @@
+version: '3.8'
+services:
+  influxdb:
+    image: 'influxdb:1.8.6'
+    container_name: influxdb
+    ports:
+      - '8083:8083'
+      - '8086:8086'
+      - '8090:8090'
+      - '2003:2003'
+    env_file:
+      - env.influxdb
+    volumes:
+      - '/srv/docker/influxdb/data:/var/lib/influxdb'
+
+  telegraf:
+    image: 'telegraf:latest'
+    container_name: telegraf
+    links:
+      - influxdb
+    volumes:
+      - './telegraf.conf:/etc/telegraf/telegraf.conf:ro'
+      - '/var/run/docker.sock:/var/run/docker.sock'
+
+  grafana:
+    image: 'grafana/grafana:latest'
+    container_name: grafana
+    ports:
+      - '3000:3000'
+    env_file:
+      - env.grafana
+    user: '0'
+    links:
+      - influxdb
+    volumes:
+      - '/srv/docker/grafana/data:/var/lib/grafana'
+
+  elasticsearch:
+    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.13.3'
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - 'elasticsearch-data:/usr/share/elasticsearch/data'
+    ports:
+      - '9200:9200'
+      - '9300:9300'
+
+  kibana:
+    container_name: kibana
+    image: 'docker.elastic.co/kibana/kibana:7.13.3'
+    environment:
+      - 'ELASTICSEARCH_HOSTS=http://elasticsearch:9200'
+    ports:
+      - '5601:5601'
+    depends_on:
+      - elasticsearch
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+
+volumes:
+  elasticsearch-data:
+    driver: local
+  mongodb-data:

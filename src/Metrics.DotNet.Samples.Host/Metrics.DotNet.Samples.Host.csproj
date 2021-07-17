@@ -17,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="App.Metrics.InfluxDB" Version="4.2.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Elasticsearch" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Network" Version="5.0.4" />
@@ -34,6 +35,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Metrics.DotNet.Samples.Services\Metrics.DotNet.Samples.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
   </ItemGroup>
 
 </Project>

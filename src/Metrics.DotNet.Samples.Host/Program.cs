@@ -40,6 +40,8 @@ namespace Metrics.DotNet.Samples.Host
             .UseStartup<Startup>()
             .UseSerilog()
             .UseMetrics()
+            .UseMetricsEndpoints()
+            .UseMetricsWebTracking()
             .Build();
     }
 }
