@@ -28,12 +28,28 @@ namespace Metrics.DotNet.Samples.Services.Repository
                 using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
-                var command = new CommandDefinition("SELECT * FROM books");
+                var command = new CommandDefinition("SELECT * FROM public.book");
                 return await connection.QueryAsync<Book>(command);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
+            }
+        }
+
+        public async Task<IEnumerable<Book>> GetBooks(int count)
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await connection.OpenAsync();
+
+                var command = new CommandDefinition("SELECT * FROM public.book LIMIT @count", new { count });
+                return await connection.QueryAsync<Book>(command);
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
@@ -44,13 +60,13 @@ namespace Metrics.DotNet.Samples.Services.Repository
                 using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
-                var command = new CommandDefinition("SELECT * FROM books WHERE id = @id", new { id });
+                var command = new CommandDefinition("SELECT * FROM public.book WHERE id = @id", new { id });
                 return await connection.QueryFirstAsync<Book>(command);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
-                throw ex;
+                throw;
             }
         }
 
@@ -78,9 +94,9 @@ namespace Metrics.DotNet.Samples.Services.Repository
                     });
                 await connection.ExecuteAsync(command);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -107,9 +123,9 @@ namespace Metrics.DotNet.Samples.Services.Repository
                 var sql = sqlText.ToString();
                 await connection.ExecuteAsync(sql);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
     }

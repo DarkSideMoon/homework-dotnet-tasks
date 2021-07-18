@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environment", "environment"
 		environment\telegraf.conf = environment\telegraf.conf
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Mvc.UI", "src\Metrics.DotNet.Samples.Mvc.UI\Metrics.DotNet.Samples.Mvc.UI.csproj", "{4BAFB4D9-613C-4CDE-A916-37BC5F410104}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3443FF6C-F8C1-410B-BB99-845678C2A0F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BAFB4D9-613C-4CDE-A916-37BC5F410104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BAFB4D9-613C-4CDE-A916-37BC5F410104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BAFB4D9-613C-4CDE-A916-37BC5F410104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAFB4D9-613C-4CDE-A916-37BC5F410104}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{4CD0BC28-1FBE-401A-9930-BA29CA0B9066} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{3443FF6C-F8C1-410B-BB99-845678C2A0F3} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{6FADB897-591A-490C-ACA9-209DDB0E8E17} = {B8AEE176-6810-4CC9-9C00-4C2BE93485FE}
+		{4BAFB4D9-613C-4CDE-A916-37BC5F410104} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}

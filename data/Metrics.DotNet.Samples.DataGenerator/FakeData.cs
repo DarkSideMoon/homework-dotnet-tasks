@@ -27,7 +27,7 @@ namespace Metrics.DotNet.Samples.DataGenerator
             .RuleFor(x => x.CountOfPages, f => f.Random.Number())
             .RuleFor(x => x.BookType, f => f.Random.Enum<BookType>())
             .RuleFor(x => x.AuthorFirstName, f => f.Person.FirstName)
-            .RuleFor(x => x.AuthorLastName, f => f.Person.UserName)
+            .RuleFor(x => x.AuthorLastName, f => f.Person.LastName)
             .RuleFor(x => x.AuthorEmail, f => f.Person.Email);
     }
 }
