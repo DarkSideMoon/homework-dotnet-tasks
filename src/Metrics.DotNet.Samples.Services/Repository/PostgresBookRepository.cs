@@ -44,7 +44,7 @@ namespace Metrics.DotNet.Samples.Services.Repository
                 using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
-                var command = new CommandDefinition("SELECT * FROM public.book LIMIT @count", new { count });
+                var command = new CommandDefinition("SELECT * FROM public.book where random() < 0.01 LIMIT @count", new { count });
                 return await connection.QueryAsync<Book>(command);
             }
             catch (Exception)
@@ -65,7 +65,6 @@ namespace Metrics.DotNet.Samples.Services.Repository
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -122,6 +121,22 @@ namespace Metrics.DotNet.Samples.Services.Repository
 
                 var sql = sqlText.ToString();
                 await connection.ExecuteAsync(sql);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<Book> GetRandomBook()
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await connection.OpenAsync();
+
+                var command = new CommandDefinition("select * from public.book where random() < 0.01 LIMIT 1;");
+                return await connection.QueryFirstAsync<Book>(command);
             }
             catch (Exception)
             {

@@ -20,9 +20,15 @@ namespace Metrics.DotNet.Samples.Mvc.UI.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Project()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Book()
+        {
+            var book = await _postgresRepository.GetRandomBook();
+            return View(book);
         }
 
         public async Task<IActionResult> Books(int count)

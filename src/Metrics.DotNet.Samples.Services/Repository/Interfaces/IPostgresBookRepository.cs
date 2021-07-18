@@ -9,5 +9,7 @@ namespace Metrics.DotNet.Samples.Services.Repository.Interfaces
         Task BulkSetBooks(List<Book> books);
 
         Task<IEnumerable<Book>> GetBooks(int count);
+
+        Task<Book> GetRandomBook();
     }
 }
