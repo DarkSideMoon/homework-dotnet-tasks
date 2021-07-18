@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Metrics.DotNet.Samples.Services.Repository
+namespace Metrics.DotNet.Samples.Services.Repository.Interfaces
 {
     public interface IDbBookRepository
     {

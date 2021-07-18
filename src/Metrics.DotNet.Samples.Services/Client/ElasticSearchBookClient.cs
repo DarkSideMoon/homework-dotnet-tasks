@@ -26,16 +26,16 @@ namespace Metrics.DotNet.Samples.Services.Client
             _client = new ElasticClient(connectionSettings);
         }
 
-        public Task<IndexResponse> Add(BookDocument data)
+        public async Task<IndexResponse> Add(BookDocument data)
         {
             // https://stackoverflow.com/questions/53039564/what-is-the-difference-between-createasync-and-indexasync-methods-on-elasticsear
             //var res = _client.CreateDocumentAsync(data);
-            return _client.IndexDocumentAsync(data);
+            return await _client.IndexDocumentAsync(data);
         }
 
         public async Task<ISearchResponse<BookDocument>> Search(string title)
         {
-            return _client.Search<BookDocument>(s => s.Query(q => q.Match(m => m.Field(f => f.Title).Query(title))));
+            return await _client.SearchAsync<BookDocument>(s => s.Query(q => q.Match(m => m.Field(f => f.Title).Query(title))));
             //return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
         }
 

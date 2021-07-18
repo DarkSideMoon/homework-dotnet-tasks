@@ -76,7 +76,38 @@ services:
     volumes:
       - mongodb-data:/data/db
 
+  postgres:
+    container_name: postgres
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "Password123"
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  redis:
+    image: 'redis:latest'
+    command: ["redis-server", "--appendonly", "yes"]
+    hostname: redis
+    networks:
+      - redis-net
+    volumes:
+      - redis-data:/data
+
+networks:
+  redis-net:
+  postgres:
+    driver: bridge
+
 volumes:
   elasticsearch-data:
     driver: local
   mongodb-data:
+  postgres:
+  redis-data:

@@ -1,4 +1,5 @@
 ﻿using Metrics.DotNet.Samples.Contracts;
+using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;

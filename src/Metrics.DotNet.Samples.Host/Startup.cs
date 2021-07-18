@@ -1,11 +1,15 @@
 using App.Metrics;
 using App.Metrics.Formatters.InfluxDB;
 using HealthChecks.UI.Client;
+using Metrics.DotNet.Samples.Contracts;
+using Metrics.DotNet.Samples.Services.Cache;
 using Metrics.DotNet.Samples.Services.Client;
 using Metrics.DotNet.Samples.Services.Repository;
+using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -54,9 +58,11 @@ namespace Metrics.DotNet.Samples.Host
             services.Configure<ElasticSearchSetting>(Configuration.GetSection("elasticSearch"));
             services.Configure<MongoSettings>(Configuration.GetSection("mongo"));
             services.Configure<PostgresSettings>(Configuration.GetSection("postgres"));
+            services.Configure<RedisSettings>(Configuration.GetSection("redis"));
 
             services.AddTransient<IElasticSearchBookClient, ElasticSearchBookClient>();
             services.AddTransient<IMongoDbBookRepository, MongoDbBookRepository>();
+            services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
 
             services.AddHealthChecksUI(x =>
             {
@@ -94,6 +100,16 @@ namespace Metrics.DotNet.Samples.Host
                 }).Build();
 
             services.AddMetrics(metrics);
+
+            // Add redis cache
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = Configuration.GetSection("redis").Get<RedisSettings>().ConnectionString;
+            });
+
+            services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
+            services.AddSingleton<IStorage<Book>>(
+                x => new RedisStorage<Book>(x.GetRequiredService<IDistributedCache>(), x.GetRequiredService<IRedisConnectionFactory>()));
         }
 
         public void Configure(IApplicationBuilder app)

@@ -28,3 +28,5 @@ Greate guide you can find here: https://www.app-metrics.io/web-monitoring/aspnet
 I am using this TIG stack (Telegraf, InfluxDb, Grafana) from https://github.com/nicolargo/docker-influxdb-grafana
 Also, I make some changes. 
 All stuff you can find in folder `environment`
+
+### Tasks

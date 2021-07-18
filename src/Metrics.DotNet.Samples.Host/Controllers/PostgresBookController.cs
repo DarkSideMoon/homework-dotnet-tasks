@@ -1,5 +1,5 @@
 ﻿using Metrics.DotNet.Samples.Contracts;
-using Metrics.DotNet.Samples.Services.Repository;
+using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

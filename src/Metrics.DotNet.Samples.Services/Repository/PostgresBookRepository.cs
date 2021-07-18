@@ -1,11 +1,12 @@
-﻿using Metrics.DotNet.Samples.Contracts;
+﻿using Dapper;
+using Metrics.DotNet.Samples.Contracts;
+using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.Extensions.Options;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Npgsql;
-using Dapper;
 
 namespace Metrics.DotNet.Samples.Services.Repository
 {
