@@ -8,7 +8,7 @@ namespace Metrics.DotNet.Samples.Contracts
 
         public string Title { get; set; }
 
-        public double Price { get; set; }
+        public int Price { get; set; }
 
         public string ISBN { get; set; }
 
@@ -18,7 +18,11 @@ namespace Metrics.DotNet.Samples.Contracts
 
         public BookType BookType { get; set; }
 
-        public Person Author { get; set; }
+        public string AuthorFirstName { get; set; }
+
+        public string AuthorLastName { get; set; }
+
+        public string AuthorEmail { get; set; }
 
         string IStorageId.Id => Id.ToString();
     }

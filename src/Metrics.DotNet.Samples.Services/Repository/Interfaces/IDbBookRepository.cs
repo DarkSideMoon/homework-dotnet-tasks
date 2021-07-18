@@ -13,6 +13,6 @@ namespace Metrics.DotNet.Samples.Services.Repository.Interfaces
 
         Task SetBook(Book book);
 
-        Task SetBooks(List<Book> book);
+        Task SetBooks(List<Book> books);
     }
 }

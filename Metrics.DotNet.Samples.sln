@@ -34,6 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environment", "environment"
 		environment\docker-compose.yml = environment\docker-compose.yml
 		environment\env.grafana = environment\env.grafana
 		environment\env.influxdb = environment\env.influxdb
+		environment\postgres_init.sql = environment\postgres_init.sql
 		environment\telegraf.conf = environment\telegraf.conf
 	EndProjectSection
 EndProject

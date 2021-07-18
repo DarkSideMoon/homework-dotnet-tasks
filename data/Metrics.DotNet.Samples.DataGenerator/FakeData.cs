@@ -21,16 +21,13 @@ namespace Metrics.DotNet.Samples.DataGenerator
         public static Faker<Book> Book = new Faker<Book>()
             .RuleFor(x => x.Id, f => f.Random.Guid())
             .RuleFor(x => x.Language, f => f.Random.Enum<LanguageType>())
-            .RuleFor(x => x.Price, f => f.Random.Double())
+            .RuleFor(x => x.Price, f => f.Random.Number(100, 1000))
             .RuleFor(x => x.Title, f => f.Company.CompanyName())
             .RuleFor(x => x.ISBN, f => f.Random.Guid().ToString())
             .RuleFor(x => x.CountOfPages, f => f.Random.Number())
             .RuleFor(x => x.BookType, f => f.Random.Enum<BookType>())
-            .RuleFor(x => x.Author, f => new Contracts.Person()
-            {
-                Email = f.Person.Email,
-                FirstName = f.Person.FirstName,
-                LastName = f.Person.LastName
-            });
+            .RuleFor(x => x.AuthorFirstName, f => f.Person.FirstName)
+            .RuleFor(x => x.AuthorLastName, f => f.Person.UserName)
+            .RuleFor(x => x.AuthorEmail, f => f.Person.Email);
     }
 }

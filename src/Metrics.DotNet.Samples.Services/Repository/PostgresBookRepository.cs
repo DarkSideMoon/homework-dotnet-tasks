@@ -6,6 +6,8 @@ using Microsoft.Extensions.Options;
 using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Metrics.DotNet.Samples.Services.Repository
@@ -21,30 +23,94 @@ namespace Metrics.DotNet.Samples.Services.Repository
 
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
-            await connection.OpenAsync();
+            try
+            {
+                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await connection.OpenAsync();
 
-            var command = new CommandDefinition("SELECT * FROM books");
-            return await connection.QueryAsync<Book>(command);
+                var command = new CommandDefinition("SELECT * FROM books");
+                return await connection.QueryAsync<Book>(command);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public async Task<Book> GetBook(Guid id)
         {
-            using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
-            await connection.OpenAsync();
+            try
+            {
+                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await connection.OpenAsync();
 
-            var command = new CommandDefinition("SELECT * FROM books WHERE id = @id", new { id });
-            return await connection.QueryFirstAsync<Book>(command);
+                var command = new CommandDefinition("SELECT * FROM books WHERE id = @id", new { id });
+                return await connection.QueryFirstAsync<Book>(command);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
-        public Task SetBook(Book book)
+        public async Task SetBook(Book book)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await connection.OpenAsync();
+
+                var command = new CommandDefinition("INSERT INTO public.book(\"AuthorFirstName\", \"AuthorLastName\", \"BookType\", \"CountOfPages\", \"ISBN\", \"Id\", \"Language\", \"Price\", \"Title\", \"AuthorEmail\") " +
+                    "VALUES(@AuthorFirstName, @AuthorLastName, @BookType, @CountOfPages, @ISBN, @Id, @Language, @Price, @Title, @AuthorEmail);",
+                    new
+                    {
+                        book.AuthorFirstName,
+                        book.AuthorLastName,
+                        book.BookType,
+                        book.CountOfPages,
+                        book.ISBN,
+                        book.Id,
+                        book.Language,
+                        book.Price,
+                        book.Title,
+                        book.AuthorEmail
+                    });
+                await connection.ExecuteAsync(command);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public Task SetBooks(List<Book> book)
+        public async Task SetBooks(List<Book> books)
         {
-            throw new NotImplementedException();
+            foreach (var book in books)
+            {
+                await SetBook(book);
+            }
+        }
+
+        public async Task BulkSetBooks(List<Book> books)
+        {
+            try
+            {
+                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await connection.OpenAsync();
+
+                var sqlText = books.Aggregate(new StringBuilder(), (sb, book) => sb.AppendLine(
+                "INSERT INTO public.book(\"AuthorFirstName\", \"AuthorLastName\", \"BookType\", \"CountOfPages\", \"ISBN\", \"Id\", \"Language\", \"Price\", \"Title\", \"AuthorEmail\") " +
+                    $"VALUES('{book.AuthorFirstName}', '{book.AuthorLastName}', '{book.BookType}', '{book.CountOfPages}', " +
+                    $"'{book.ISBN}', '{book.Id}', '{book.Language}', {book.Price}, '{book.Title}', '{book.AuthorEmail}'); "));
+
+                var sql = sqlText.ToString();
+                await connection.ExecuteAsync(sql);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

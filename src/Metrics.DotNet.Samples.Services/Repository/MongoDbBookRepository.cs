@@ -48,12 +48,12 @@ namespace Metrics.DotNet.Samples.Services.Repository
             }
         }
 
-        public async Task SetBooks(List<Book> book)
+        public async Task SetBooks(List<Book> books)
         {
             try
             {
                 var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
-                await collection.InsertManyAsync(book);
+                await collection.InsertManyAsync(books);
             }
             catch (Exception ex)
             {
