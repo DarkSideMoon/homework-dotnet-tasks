@@ -21,12 +21,34 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         }
 
         /// <summary>
+        /// Get random book from PostgreSQL
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet()]
+        public async Task<IActionResult> GeRandomBook()
+        {
+            var result = await _postgresRepository.GetRandomBook();
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get books from PostgreSQL by count
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{count}")]
+        public async Task<IActionResult> GetDbBooks(int count)
+        {
+            var result = await _postgresRepository.GetBooks(count);
+            return Ok(result);
+        }
+
+        /// <summary>
         /// Get book from PostgreSQL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetPostgresBook(Guid id)
+        public async Task<IActionResult> GetBook(Guid id)
         {
             var result = await _postgresRepository.GetBook(id);
             return Ok(result);
@@ -37,7 +59,7 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetMongoDbAllBooks()
+        public async Task<IActionResult> GetDbAllBooks()
         {
             var result = await _postgresRepository.GetAllBooks();
             return Ok(result);
@@ -49,7 +71,7 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         /// <param name="book"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> SetPostgresBook([FromBody] Book book)
+        public async Task<IActionResult> SetBook([FromBody] Book book)
         {
             await _postgresRepository.SetBook(book);
             return Ok();

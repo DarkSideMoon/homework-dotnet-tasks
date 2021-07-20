@@ -18,7 +18,7 @@ namespace Metrics.DotNet.Samples.DataGenerator
                 ConnectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=Password123"
             });
             var postgresDb = new PostgresBookRepository(postgresSettings);
-            for (var i = 0; i < 50; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var postgresData = FakeData.Book.Generate(1000);
                 postgresDb.SetBooks(postgresData).GetAwaiter().GetResult();
