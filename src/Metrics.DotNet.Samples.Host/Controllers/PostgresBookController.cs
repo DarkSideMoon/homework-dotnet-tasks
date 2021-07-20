@@ -48,7 +48,7 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBook(Guid id)
+        public async Task<IActionResult> GetBook(int id)
         {
             var result = await _postgresRepository.GetBook(id);
             return Ok(result);

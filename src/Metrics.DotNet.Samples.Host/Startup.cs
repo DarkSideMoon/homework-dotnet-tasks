@@ -109,7 +109,7 @@ namespace Metrics.DotNet.Samples.Host
 
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
             services.AddSingleton<IStorage<Book>>(
-                x => new RedisStorage<Book>(x.GetRequiredService<IDistributedCache>(), x.GetRequiredService<IRedisConnectionFactory>()));
+                x => new RedisStorage<Book>(x.GetRequiredService<IDistributedCache>())); // , x.GetRequiredService<IRedisConnectionFactory>()
         }
 
         public void Configure(IApplicationBuilder app)

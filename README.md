@@ -8,7 +8,7 @@
 
 | OS                        | Status                                                                                                                                                 |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Windows win10-x64         | [![Build status](https://ci.appveyor.com/api/projects/status/q35imesu50g2flpg/branch/main?svg=true)](https://ci.appveyor.com/project/Greenwood/metrics-dotnet-samples/branch/main) |
+| Windows win10-x64         | [![Build status](https://ci.appveyor.com/api/projects/status/q35imesu50g2flpg?svg=true)](https://ci.appveyor.com/project/Greenwood/metrics-dotnet-samples) |
 | Linux Ubuntu 14.04.5 LTS  | [![Build Status](https://travis-ci.com/DarkSideMoon/metrics-dotnet-samples.svg?branch=main)](https://travis-ci.com/DarkSideMoon/metrics-dotnet-samples) |
 
 ## App Metrics guide

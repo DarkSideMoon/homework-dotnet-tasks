@@ -7,7 +7,7 @@ namespace Metrics.DotNet.Samples.Services.Repository.Interfaces
 {
     public interface IDbBookRepository
     {
-        Task<Book> GetBook(Guid id);
+        Task<Book> GetBook(int id);
 
         Task<IEnumerable<Book>> GetAllBooks();
 

@@ -26,7 +26,7 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMongoDbBook(Guid id)
+        public async Task<IActionResult> GetMongoDbBook(int id)
         {
             var result = await _mongoDbRepository.GetBook(id);
             return Ok(result);

@@ -4,7 +4,6 @@ using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -29,7 +28,7 @@ namespace Metrics.DotNet.Samples.Services.Repository
             return await collection.Find(new BsonDocument()).ToListAsync();
         }
 
-        public async Task<Book> GetBook(Guid id)
+        public async Task<Book> GetBook(int id)
         {
             var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
             return await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
@@ -37,28 +36,14 @@ namespace Metrics.DotNet.Samples.Services.Repository
 
         public async Task SetBook(Book book)
         {
-            try
-            {
-                var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
-                await collection.InsertOneAsync(book);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
+            await collection.InsertOneAsync(book);
         }
 
         public async Task SetBooks(List<Book> books)
         {
-            try
-            {
-                var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
-                await collection.InsertManyAsync(books);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var collection = _mongoDb.GetCollection<Book>(_setting.Value.CollectionName);
+            await collection.InsertManyAsync(books);
         }
     }
 }

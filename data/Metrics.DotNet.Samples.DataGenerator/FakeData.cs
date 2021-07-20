@@ -19,7 +19,6 @@ namespace Metrics.DotNet.Samples.DataGenerator
             .RuleFor(x => x.AuthorEmail, f => f.Person.Email);
 
         public static Faker<Book> Book = new Faker<Book>()
-            .RuleFor(x => x.Id, f => f.Random.Guid())
             .RuleFor(x => x.Language, f => f.Random.Enum<LanguageType>())
             .RuleFor(x => x.Price, f => f.Random.Number(100, 1000))
             .RuleFor(x => x.Title, f => f.Company.CompanyName())

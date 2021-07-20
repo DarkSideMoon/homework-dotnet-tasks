@@ -25,9 +25,10 @@ namespace Metrics.DotNet.Samples.Services.Repository
         {
             try
             {
-                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
+                // TODO: Add pagination to get all data
                 var command = new CommandDefinition("SELECT * FROM public.book");
                 return await connection.QueryAsync<Book>(command);
             }
@@ -41,7 +42,7 @@ namespace Metrics.DotNet.Samples.Services.Repository
         {
             try
             {
-                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
                 var command = new CommandDefinition("SELECT * FROM public.book where random() < 0.01 LIMIT @count", new { count });
@@ -53,11 +54,11 @@ namespace Metrics.DotNet.Samples.Services.Repository
             }
         }
 
-        public async Task<Book> GetBook(Guid id)
+        public async Task<Book> GetBook(int id)
         {
             try
             {
-                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
                 var command = new CommandDefinition("SELECT * FROM public.book WHERE id = @id", new { id });
@@ -73,11 +74,11 @@ namespace Metrics.DotNet.Samples.Services.Repository
         {
             try
             {
-                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
-                var command = new CommandDefinition("INSERT INTO public.book(\"AuthorFirstName\", \"AuthorLastName\", \"BookType\", \"CountOfPages\", \"ISBN\", \"Id\", \"Language\", \"Price\", \"Title\", \"AuthorEmail\") " +
-                    "VALUES(@AuthorFirstName, @AuthorLastName, @BookType, @CountOfPages, @ISBN, @Id, @Language, @Price, @Title, @AuthorEmail);",
+                var command = new CommandDefinition("INSERT INTO public.book(\"AuthorFirstName\", \"AuthorLastName\", \"BookType\", \"CountOfPages\", \"ISBN\", \"Language\", \"Price\", \"Title\", \"AuthorEmail\") " +
+                    "VALUES(@AuthorFirstName, @AuthorLastName, @BookType, @CountOfPages, @ISBN, @Language, @Price, @Title, @AuthorEmail);",
                     new
                     {
                         book.AuthorFirstName,
@@ -85,7 +86,6 @@ namespace Metrics.DotNet.Samples.Services.Repository
                         book.BookType,
                         book.CountOfPages,
                         book.ISBN,
-                        book.Id,
                         book.Language,
                         book.Price,
                         book.Title,
@@ -111,7 +111,7 @@ namespace Metrics.DotNet.Samples.Services.Repository
         {
             try
             {
-                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
                 var sqlText = books.Aggregate(new StringBuilder(), (sb, book) => sb.AppendLine(
@@ -132,7 +132,7 @@ namespace Metrics.DotNet.Samples.Services.Repository
         {
             try
             {
-                using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
+                await using var connection = new NpgsqlConnection(_settings.Value.ConnectionString);
                 await connection.OpenAsync();
 
                 var command = new CommandDefinition("select * from public.book where random() < 0.01 LIMIT 1;");

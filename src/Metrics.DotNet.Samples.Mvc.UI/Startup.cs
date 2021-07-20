@@ -1,3 +1,6 @@
+using Metrics.DotNet.Samples.Contracts;
+using Metrics.DotNet.Samples.Services.Background;
+using Metrics.DotNet.Samples.Services.Cache;
 using Metrics.DotNet.Samples.Services.Repository;
 using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Metrics.DotNet.Samples.Services.Settings;
@@ -22,9 +25,16 @@ namespace Metrics.DotNet.Samples.Mvc.UI
         {
             services.AddControllersWithViews();
 
+            services.Configure<RedisSettings>(Configuration.GetSection("redis"));
             services.Configure<PostgresSettings>(Configuration.GetSection("postgres"));
+            
             services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
 
+            services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
+            services.AddSingleton<IStorage<Book>>(
+                x => new RedisStorage<Book>(x.GetRequiredService<IRedisConnectionFactory>()));
+
+            //services.AddHostedService<CacheLoaderHostedService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
