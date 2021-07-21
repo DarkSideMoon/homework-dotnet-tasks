@@ -4,6 +4,7 @@ using Metrics.DotNet.Samples.Services.Cache;
 using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -32,9 +33,8 @@ namespace Metrics.DotNet.Samples.Mvc.UI.Controllers
 
         public async Task<IActionResult> Book()
         {
-            var bookId = new Random().Next(1, 100000);
+            var bookId = new Random().Next(1, 10000);
             var bookCache = await _cacheStorage.GetOrSetItem(bookId.ToString(), async () => await _postgresRepository.GetRandomBook());
-
             return View(bookCache);
         }
 

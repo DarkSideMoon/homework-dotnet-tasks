@@ -93,7 +93,7 @@ namespace Metrics.DotNet.Samples.Services.Cache
             var redis = await _factory.ConnectAsync();
             var database = redis.GetDatabase();
 
-            var stringResult = await database.StringGetAsync(BuildKey(key));
+            var stringResult = await database.StringGetAsync(new RedisKey(BuildKey(key)));
 
             if(stringResult.HasValue)
                 return JsonConvert.DeserializeObject<TItem>(stringResult);
@@ -101,7 +101,9 @@ namespace Metrics.DotNet.Samples.Services.Cache
             var result = await func();
 
             var serializedStringObj = JsonConvert.SerializeObject(result);
-            await database.SetAddAsync(BuildKey(key), serializedStringObj);
+            await database.StringSetAsync(BuildKey(key),
+                new RedisValue(JsonConvert.SerializeObject(serializedStringObj)),
+                TimeSpan.FromMinutes(15));
 
             return result;
         }
@@ -157,7 +159,7 @@ namespace Metrics.DotNet.Samples.Services.Cache
 
             var setRedisBatchTasks = items
                 .Select(x => redisDb.StringSetAsync(
-                    new RedisKey(BuildKey(x.Id)), new RedisValue(JsonConvert.SerializeObject(x)), TimeSpan.FromMinutes(5)));
+                    new RedisKey(BuildKey(x.Id)), new RedisValue(JsonConvert.SerializeObject(x)), TimeSpan.FromMinutes(15)));
 
             await Task.WhenAll(setRedisBatchTasks);
         }
