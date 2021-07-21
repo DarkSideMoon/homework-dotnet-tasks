@@ -29,4 +29,7 @@ I am using this TIG stack (Telegraf, InfluxDb, Grafana) from https://github.com/
 Also, I make some changes. 
 All stuff you can find in folder `environment`
 
+## Benchmarks
+All benchmarks results you can find in folder [benchmarks](https://github.com/DarkSideMoon/metrics-dotnet-samples/tree/master/benchmarks)
+
 ### Tasks
