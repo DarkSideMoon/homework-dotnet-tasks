@@ -9,7 +9,6 @@ using Metrics.DotNet.Samples.Services.Repository.Interfaces;
 using Metrics.DotNet.Samples.Services.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -101,15 +100,11 @@ namespace Metrics.DotNet.Samples.Host
 
             services.AddMetrics(metrics);
 
-            // Add redis cache
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = Configuration.GetSection("redis").Get<RedisSettings>().ConnectionString;
-            });
+            services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
 
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
             services.AddSingleton<IStorage<Book>>(
-                x => new RedisStorage<Book>(x.GetRequiredService<IDistributedCache>())); // , x.GetRequiredService<IRedisConnectionFactory>()
+                x => new RedisStorage<Book>(x.GetRequiredService<IRedisConnectionFactory>()));
         }
 
         public void Configure(IApplicationBuilder app)

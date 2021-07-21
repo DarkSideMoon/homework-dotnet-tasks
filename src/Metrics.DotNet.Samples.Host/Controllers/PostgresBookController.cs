@@ -24,7 +24,7 @@ namespace Metrics.DotNet.Samples.Host.Controllers
         /// Get random book from PostgreSQL
         /// </summary>
         /// <returns></returns>
-        [HttpGet()]
+        [HttpGet("random")]
         public async Task<IActionResult> GeRandomBook()
         {
             var result = await _postgresRepository.GetRandomBook();

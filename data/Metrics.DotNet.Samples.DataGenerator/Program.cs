@@ -13,6 +13,7 @@ namespace Metrics.DotNet.Samples.DataGenerator
         {
             Console.WriteLine("Generate random data for postgres!");
 
+            /*
             var postgresSettings = Options.Create(new PostgresSettings
             {
                 ConnectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=Password123"
@@ -27,8 +28,9 @@ namespace Metrics.DotNet.Samples.DataGenerator
             }
 
             Console.ReadLine();
+            */
             Console.WriteLine("Generate random data for elastic search!");
-
+            
             var settings = Options.Create(new ElasticSearchSetting
             {
                 IndexName = "book",
