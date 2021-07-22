@@ -37,10 +37,12 @@ namespace Metrics.DotNet.Samples.DataGenerator
                 Uri = "http://localhost:9200"
             });
             var elasticClient = new ElasticSearchBookClient(settings);
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 100; i++)
             {
                 var elasticData = FakeData.BookDocument.Generate(1000);
                 elasticClient.BulkUpdate(elasticData);
+
+                Console.WriteLine("Bulk 1000 rows, iteration: " + i);
             }
 
             Console.ReadLine();

@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="App.Metrics.AspNetCore.All" Version="4.2.0" />
+    <PackageReference Include="App.Metrics.AspNetCore.Health" Version="3.2.0" />
+    <PackageReference Include="App.Metrics.Health.Reporting.Metrics" Version="3.2.0" />
+    <PackageReference Include="App.Metrics.Formatters.InfluxDB" Version="4.2.0" />
+    <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="4.2.0" />
+
     <PackageReference Include="Dapper" Version="2.0.90" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
     <PackageReference Include="MongoDB.Bson" Version="2.13.0" />

@@ -8,7 +8,7 @@ namespace Metrics.DotNet.Samples.Documents
     public class BookDocument
     {
         [Text(Name = "Id")]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Text(Name = "Title")]
         public string Title { get; set; }

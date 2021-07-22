@@ -7,7 +7,7 @@
 | OS                        | Status                                                                                                                                                 |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Windows win10-x64         | [![Build status](https://ci.appveyor.com/api/projects/status/q35imesu50g2flpg?svg=true)](https://ci.appveyor.com/project/Greenwood/metrics-dotnet-samples) |
-| Linux Ubuntu 14.04.5 LTS  | [![Build Status](https://travis-ci.com/DarkSideMoon/metrics-dotnet-samples.svg?branch=main)](https://travis-ci.com/DarkSideMoon/metrics-dotnet-samples) |
+| Linux Ubuntu 14.04.5 LTS  | [![Build Status](https://api.travis-ci.org/DarkSideMoon/metrics-dotnet-samples.svg?branch=master)](https://travis-ci.com/DarkSideMoon/metrics-dotnet-samples) |
 | .NET Core Linux           | ![Build Status](https://github.com/DarkSideMoon/metrics-dotnet-samples/actions/workflows/dotnet-core-linux.yml/badge.svg) |
 | .NET Core Windows         | ![Build Status](https://github.com/DarkSideMoon/metrics-dotnet-samples/actions/workflows/dotnet-core-windows.yml/badge.svg) |
 
@@ -35,7 +35,9 @@ All benchmarks results you can find in folder [benchmarks](https://github.com/Da
 ## Homeworks
 All homework tasks you can find in *Projects* tab
 
-- [x] Compare databases
-- [ ] Service metrics app
-- [ ] Google user metrics
-- [x] Stress Testing
+№ | Homework                  | Completed          | Description    |
+- |:------------------------- | :----------------- | :--------------|
+1 | Compare databases         | :heavy_check_mark: |  Description
+2 | Service metrics app       |                    |  Description
+3 | Google user metrics       |                    |  Description
+4 | Stress Testing            | :heavy_check_mark: |  Description

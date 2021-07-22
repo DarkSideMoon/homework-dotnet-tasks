@@ -11,9 +11,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 using System;
+using App.Metrics.Health;
+using HealthCheckResult = Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckResult;
 
 namespace Metrics.DotNet.Samples.Host
 {
@@ -72,33 +73,47 @@ namespace Metrics.DotNet.Samples.Host
 
             services.AddHealthChecks()
                 .AddCheck("base", () => HealthCheckResult.Healthy("Service is healthy!"), tags: new[] { "base" })
-                .AddNpgSql(Configuration["postgres:connectionString"], tags: new string[] { "db", "sql", "postgreSql" })
-                .AddMongoDb(Configuration["mongo:connectionString"], tags: new string[] { "db", "document", "mongoDb" })
-                .AddElasticsearch(Configuration["elasticSearch:uri"], tags: new string[] { "db", "elasticsearch" })
-                //.AddProcessHealthCheck(System.Reflection.Assembly.GetEntryAssembly().FullName, p => p.Length > 0, tags: new string[] { "base" })
-                //.AddRedis(Configuration["Data:ConnectionStrings:Redis"]);
-                ;
+                .AddNpgSql(Configuration["postgres:connectionString"], tags: new[] { "db", "sql", "postgreSql" })
+                .AddMongoDb(Configuration["mongo:connectionString"], tags: new[] { "db", "document", "mongoDb" })
+                .AddElasticsearch(Configuration["elasticSearch:uri"], tags: new[] { "db", "elasticsearch" })
+                .AddRedis(Configuration["Data:ConnectionStrings:Redis"]);
 
-            var influxDbSettings = Configuration.GetSection("influxDb").Get<InfluxSettings>();
             var metrics = AppMetrics.CreateDefaultBuilder()
-                .Report.ToInfluxDb(
-                options =>
+                .Configuration.Configure(x =>
                 {
-                    options.InfluxDb.BaseUri = new Uri(influxDbSettings.Uri);
-                    options.InfluxDb.Database = influxDbSettings.Database;
-                    options.InfluxDb.Consistenency = "consistency";
-                    options.InfluxDb.UserName = influxDbSettings.UserName;
-                    options.InfluxDb.Password = influxDbSettings.Password;
-                    options.InfluxDb.RetentionPolicy = "rp";
-                    options.InfluxDb.CreateDataBaseIfNotExists = true;
-                    options.HttpPolicy.BackoffPeriod = TimeSpan.FromSeconds(30);
-                    options.HttpPolicy.FailuresBeforeBackoff = 5;
-                    options.HttpPolicy.Timeout = TimeSpan.FromSeconds(10);
-                    options.MetricsOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
-                    options.FlushInterval = TimeSpan.FromSeconds(20);
+                    x.WithGlobalTags(
+                        (tags, envInfo) =>
+                        {
+                            tags.Add("app_version", envInfo.EntryAssemblyVersion);
+                        });
                 }).Build();
 
             services.AddMetrics(metrics);
+            services.AddMetricsTrackingMiddleware();
+
+            // Important!!!
+            services.AddMetricsReportingHostedService();
+            services.AddHealthReportingHostedService();
+
+            services.AddAppMetricsHealthPublishing();
+
+            services.AddMetricsEndpoints(options =>
+            {
+                options.MetricsTextEndpointOutputFormatter = new MetricsInfluxDbLineProtocolOutputFormatter();
+            });
+
+            //AppMetricsHealth.CreateDefaultBuilder()
+            //    .OutputHealth.AsPlainText()
+            //    .HealthChecks.RegisterFromAssembly(services)
+            //    .Report.ToMetrics(metrics)
+            //    .BuildAndAddTo(services);
+
+            var health = AppMetricsHealth.CreateDefaultBuilder()
+                .HealthChecks.RegisterFromAssembly(services)
+                .Report.ToMetrics(metrics)
+                .BuildAndAddTo(services);
+
+            services.AddHealth(health);
 
             services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
 
@@ -115,6 +130,9 @@ namespace Metrics.DotNet.Samples.Host
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseMetricsAllMiddleware();
+            app.UseHealthAllEndpoints();
 
             app.UseEndpoints(endpoints =>
             {

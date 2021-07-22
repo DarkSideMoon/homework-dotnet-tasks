@@ -42,7 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.Mvc.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{755A0603-A690-4AB5-8BC3-7399747AA0CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Metrics.DotNet.Samples.Stress.Tests", "tests\Metrics.DotNet.Samples.Stress.Tests\Metrics.DotNet.Samples.Stress.Tests.csproj", "{AB5E5564-D2F8-4F62-B825-5D2E7409FCB0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Metrics.DotNet.Samples.Stress.Tests", "tests\Metrics.DotNet.Samples.Stress.Tests\Metrics.DotNet.Samples.Stress.Tests.csproj", "{AB5E5564-D2F8-4F62-B825-5D2E7409FCB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

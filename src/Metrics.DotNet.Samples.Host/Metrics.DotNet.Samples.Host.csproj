@@ -39,8 +39,4 @@
     <ProjectReference Include="..\Metrics.DotNet.Samples.Services\Metrics.DotNet.Samples.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
 </Project>

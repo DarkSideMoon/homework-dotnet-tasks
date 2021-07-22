@@ -39,6 +39,11 @@ namespace Metrics.DotNet.Samples.Services.Client
             //return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
         }
 
+        public async Task<ISearchResponse<BookDocument>> SearchMatchAll()
+        {
+            return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
+        }
+
         //public async Task<ISearchResponse<BookDocument>> Search(BookDocument search)
         //{
         //    return _client.Search<BookDocument>(s => s.Query(q => q.Match(m => m.Field(f => f.Title).Query(search.Title))));
