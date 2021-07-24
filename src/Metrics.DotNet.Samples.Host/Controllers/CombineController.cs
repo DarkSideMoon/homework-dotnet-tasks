@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using App.Metrics;
 using App.Metrics.Counter;
-using App.Metrics.Timer;
 
 namespace Metrics.DotNet.Samples.Host.Controllers
 {
@@ -54,23 +53,25 @@ namespace Metrics.DotNet.Samples.Host.Controllers
             });
 
             Book randomBook;
-            using (_metrics.Measure.Timer.Time(new TimerOptions
-            {
-                Context = "HomeworkDotNetTasks",
-                DurationUnit = TimeUnit.Milliseconds,
-                RateUnit = TimeUnit.Milliseconds,
-                Name = "timer.postgres.get"
-            }))
+            using (_metrics.Measure.Timer.Time(MetricsHelper.PostgresGetTimer))
             {
                 randomBook = await _postgresRepository.GetRandomBook();
             }
 
+            using (_metrics.Measure.Timer.Time(MetricsHelper.MongodbGetTimer))
+            {
+                var mongoDbAllBooks = await _mongoDbRepository.GetAllBooks();
+            }
 
-            var mongoDbAllBooks = await _mongoDbRepository.GetAllBooks();
+            using (_metrics.Measure.Timer.Time(MetricsHelper.RedisGetTimer))
+            {
+                var cacheBook = await _cacheStorage.GetItem(new Random().Next(1, 10000).ToString());
+            }
 
-            var cacheBook = await _cacheStorage.GetItem(new Random().Next(1, 10000).ToString());
-
-            var searchBook = await _elasticSearchClient.SearchMatchAll();
+            using (_metrics.Measure.Timer.Time(MetricsHelper.ElasticGetTimer))
+            {
+                var searchBook = await _elasticSearchClient.SearchMatchAll();
+            }
 
             return Ok(randomBook);
         }

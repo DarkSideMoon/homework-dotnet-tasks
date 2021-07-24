@@ -79,20 +79,20 @@ services:
     networks:
       - local-network
 
-  #postgres:
-  #  container_name: postgres
-  #  image: 'postgres:latest'
-  #  environment:
-  #    POSTGRES_USER: "postgres"
-  #    POSTGRES_PASSWORD: "Password123"
-  #    PGDATA: /data/postgres
-  #  volumes:
-  #     - postgres:/data/postgres
-  #  ports:
-  #    - "5432:5432"
-  #  networks:
-  #    - postgres
-  #  restart: unless-stopped
+  postgres:
+    container_name: postgres
+    image: 'postgres:latest'
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "Password123"
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
 
   redis:
     image: docker.io/bitnami/redis:6.2
@@ -108,11 +108,11 @@ services:
 networks:
   local-network:
     name: "local-network"
-#  postgres:
-#    driver: bridge
+  postgres:
+    driver: bridge
 
 volumes:
-  #postgres:
+  postgres:
   redis_data:
     driver: local
   elasticsearch-data:
