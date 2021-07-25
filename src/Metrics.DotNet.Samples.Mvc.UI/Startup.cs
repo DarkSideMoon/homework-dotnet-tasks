@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using StackExchange.Redis;
 
 namespace Metrics.DotNet.Samples.Mvc.UI
 {
@@ -28,7 +26,7 @@ namespace Metrics.DotNet.Samples.Mvc.UI
 
             services.Configure<RedisSettings>(Configuration.GetSection("redis"));
             services.Configure<PostgresSettings>(Configuration.GetSection("postgres"));
-            
+
             services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
 
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
@@ -38,16 +36,9 @@ namespace Metrics.DotNet.Samples.Mvc.UI
             //services.AddHostedService<CacheLoaderHostedService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            app.UseExceptionHandler("/Home/Error");
             app.UseStaticFiles();
 
             app.UseRouting();
