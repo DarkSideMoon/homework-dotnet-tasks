@@ -2,7 +2,7 @@ image: Visual Studio 2019
 
 build_script:
   - ps: dotnet --info
-  - ps: dotnet restore Metrics.DotNet.Samples.sln
-  - ps: dotnet build Metrics.DotNet.Samples.sln
+  - ps: dotnet restore Homework.Dotnet.Tasks.sln
+  - ps: dotnet build Homework.Dotnet.Tasks.sln
 
 version: 0.0.1.{build}
