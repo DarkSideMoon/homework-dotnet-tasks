@@ -80,6 +80,7 @@ namespace Homework.Dotnet.Tasks.Host.Extensions
             services.Configure<MongoSettings>(configuration.GetSection("mongo"));
             services.Configure<PostgresSettings>(configuration.GetSection("postgres"));
             services.Configure<RedisSettings>(configuration.GetSection("redis"));
+            services.Configure<MySqlSettings>(configuration.GetSection("mysql"));
 
             return services;
         }

@@ -14,6 +14,7 @@ namespace Homework.Dotnet.Tasks.Host.Extensions
             services.AddTransient<IElasticSearchBookClient, ElasticSearchBookClient>();
             services.AddTransient<IMongoDbBookRepository, MongoDbBookRepository>();
             services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
+            services.AddTransient<IMySqlBookRepository, MySqlBookRepository>();
 
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
             services.AddSingleton<IStorage<Book>>(

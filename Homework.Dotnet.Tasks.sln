@@ -44,6 +44,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework.Dotnet.Tasks.Stres
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework.Dotnet.Tasks.Host", "src\Homework.Dotnet.Tasks.Host\Homework.Dotnet.Tasks.Host.csproj", "{F5B91057-750F-4C48-B274-F95FBE96FEE8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mysql", "mysql", "{82DD39AD-65B6-46A6-AD2F-C0AF0F8CB771}"
+	ProjectSection(SolutionItems) = preProject
+		environment\mysql\docker-compose.yml = environment\mysql\docker-compose.yml
+		environment\mysql\mysql-router.env = environment\mysql\mysql-router.env
+		environment\mysql\mysql-server.env = environment\mysql\mysql-server.env
+		environment\mysql\mysql-shell.env = environment\mysql\mysql-shell.env
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FA718024-0DB0-4327-A295-A810788C08C3}"
+	ProjectSection(SolutionItems) = preProject
+		environment\mysql\scripts\db.sql = environment\mysql\scripts\db.sql
+		environment\mysql\scripts\setupCluster.js = environment\mysql\scripts\setupCluster.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +105,8 @@ Global
 		{4BAFB4D9-613C-4CDE-A916-37BC5F410104} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{AB5E5564-D2F8-4F62-B825-5D2E7409FCB0} = {755A0603-A690-4AB5-8BC3-7399747AA0CA}
 		{F5B91057-750F-4C48-B274-F95FBE96FEE8} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
+		{82DD39AD-65B6-46A6-AD2F-C0AF0F8CB771} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{FA718024-0DB0-4327-A295-A810788C08C3} = {82DD39AD-65B6-46A6-AD2F-C0AF0F8CB771}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}

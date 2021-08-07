@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Homework.Dotnet.Tasks.Services.Client;
 using Homework.Dotnet.Tasks.Services.Repository;
@@ -11,9 +12,36 @@ namespace Homework.Dotnet.Tasks.DataGenerator
     {
         static void Main(string[] _)
         {
-            Console.WriteLine("Generate random data for postgres!");
+            Console.WriteLine("Generate random data for mysql!");
+            var stopwatch = new Stopwatch();
+            var stopwatchAll = new Stopwatch();
+
+            var postgresSettings = Options.Create(new MySqlSettings
+            {
+                ConnectionString = "server=localhost;port=6446;user=homeworkuser;password=homeworkuser;database=homeworkdb"
+            });
+
+            stopwatchAll.Start();
+            var mySqlDb = new MySqlBookRepository(postgresSettings);
+            for (var i = 0; i < 10000; i++)
+            {
+                stopwatch.Start();
+                var mySqlData = FakeData.Book.Generate(1000);
+                mySqlDb.SetBooks(mySqlData).GetAwaiter().GetResult();
+                stopwatch.Stop();
+
+                Console.WriteLine("Insert 1000 rows, iteration: " + i + ", elapsed in seconds: " + stopwatch.Elapsed.Seconds);
+                stopwatch.Reset();
+            }
+            stopwatchAll.Stop();
+
+            Console.WriteLine("All time elapsed in minutes: " + stopwatchAll.Elapsed.Minutes);
+
+            Console.ReadLine();
 
             /*
+            Console.WriteLine("Generate random data for postgres!");
+            
             var postgresSettings = Options.Create(new PostgresSettings
             {
                 ConnectionString = "Server=localhost;Port=5432;Database=postgres;User Id=postgres;Password=Password123"
@@ -29,6 +57,8 @@ namespace Homework.Dotnet.Tasks.DataGenerator
 
             Console.ReadLine();
             */
+
+            /*
             Console.WriteLine("Generate random data for elastic search!");
             
             var settings = Options.Create(new ElasticSearchSetting
@@ -64,6 +94,7 @@ namespace Homework.Dotnet.Tasks.DataGenerator
 
             Console.WriteLine("Random data was generated successfully!");
             Console.ReadLine();
+            */
         }
     }
 }
