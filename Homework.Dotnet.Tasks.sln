@@ -81,6 +81,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongodb", "mongodb", "{7DE6
 		environment\mongodb\docker-compose.yml = environment\mongodb\docker-compose.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ga", "ga", "{4F271E19-5FAF-4A63-AF9D-888616C05F0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactGaApp", "ga\ReactGaApp\ReactGaApp.csproj", "{96994484-52ED-4A4F-A178-F03EB3C21A21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +119,10 @@ Global
 		{F5B91057-750F-4C48-B274-F95FBE96FEE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5B91057-750F-4C48-B274-F95FBE96FEE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5B91057-750F-4C48-B274-F95FBE96FEE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96994484-52ED-4A4F-A178-F03EB3C21A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96994484-52ED-4A4F-A178-F03EB3C21A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96994484-52ED-4A4F-A178-F03EB3C21A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96994484-52ED-4A4F-A178-F03EB3C21A21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -135,6 +143,7 @@ Global
 		{CE08985F-783F-4CD1-8B8D-7D74750D1BA0} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 		{8770E4A2-F1DE-4EA7-A299-17EA2B00677E} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 		{7DE6A95E-AEBB-44D2-B80C-02F156A3C887} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{96994484-52ED-4A4F-A178-F03EB3C21A21} = {4F271E19-5FAF-4A63-AF9D-888616C05F0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}
