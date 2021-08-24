@@ -13,6 +13,6 @@ CREATE TABLE IF NOT EXISTS `book`
     `Price` DOUBLE PRECISION(40,2) NOT NULL default '0',
     `Title` varchar(500) NOT NULL default '',
     `AuthorEmail` varchar(500) NOT NULL default '',
-    `CreateDate` DATETIME,
+    `CreateDate` DATE NOT NULL default CURRENT_TIMESTAMP,
     `Id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY
 ) ENGINE=InnoDB CHARACTER SET utf8 COLLATE utf8_general_ci;

@@ -19,14 +19,14 @@ namespace Homework.Dotnet.Tasks.Host.Controllers
         }
 
         /// <summary>
-        /// Search books by params
+        /// Search books by search string
         /// </summary>
-        /// <param name="title"></param>
+        /// <param name="searchString"></param>
         /// <returns></returns>
-        [HttpPost("{title}")]
-        public async Task<IActionResult> Search(string title)
+        [HttpPost("{searchString}")]
+        public async Task<IActionResult> Search(string searchString)
         {
-            var result = await _elasticSearchClient.Search(title);
+            var result = await _elasticSearchClient.Search(searchString);
             return Ok(result);
         }
     }

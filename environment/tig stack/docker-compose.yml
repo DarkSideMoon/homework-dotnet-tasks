@@ -118,4 +118,3 @@ volumes:
   elasticsearch-data:
     driver: local
   mongodb-data:
-  

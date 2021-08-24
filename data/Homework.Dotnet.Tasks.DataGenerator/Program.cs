@@ -5,6 +5,7 @@ using Homework.Dotnet.Tasks.Services.Client;
 using Homework.Dotnet.Tasks.Services.Repository;
 using Homework.Dotnet.Tasks.Services.Settings;
 using Microsoft.Extensions.Options;
+using Nest;
 
 namespace Homework.Dotnet.Tasks.DataGenerator
 {
@@ -12,9 +13,11 @@ namespace Homework.Dotnet.Tasks.DataGenerator
     {
         static void Main(string[] _)
         {
-            Console.WriteLine("Generate random data for mysql!");
             var stopwatch = new Stopwatch();
             var stopwatchAll = new Stopwatch();
+            /*
+            Console.WriteLine("Generate random data for mysql!");
+
 
             var postgresSettings = Options.Create(new MySqlSettings
             {
@@ -36,8 +39,9 @@ namespace Homework.Dotnet.Tasks.DataGenerator
             stopwatchAll.Stop();
 
             Console.WriteLine("All time elapsed in minutes: " + stopwatchAll.Elapsed.Minutes);
-
             Console.ReadLine();
+            */
+
 
             /*
             Console.WriteLine("Generate random data for postgres!");
@@ -58,7 +62,7 @@ namespace Homework.Dotnet.Tasks.DataGenerator
             Console.ReadLine();
             */
 
-            /*
+
             Console.WriteLine("Generate random data for elastic search!");
             
             var settings = Options.Create(new ElasticSearchSetting
@@ -67,15 +71,33 @@ namespace Homework.Dotnet.Tasks.DataGenerator
                 Uri = "http://localhost:9200"
             });
             var elasticClient = new ElasticSearchBookClient(settings);
+
+            stopwatchAll.Start();
             for (var i = 0; i < 100; i++)
             {
+                stopwatch.Start();
+
                 var elasticData = FakeData.BookDocument.Generate(1000);
+
+                foreach (var data in elasticData)
+                {
+                    data.Suggest = new CompletionField
+                    {
+                        Input = new[] {data.Title, data.AuthorEmail, data.AuthorLastName}
+                    };
+                }
+
                 elasticClient.BulkUpdate(elasticData);
+                stopwatch.Stop();
 
-                Console.WriteLine("Bulk 1000 rows, iteration: " + i);
+                Console.WriteLine("Insert 1000 rows, iteration: " + i + ", elapsed in seconds: " + stopwatch.Elapsed.Seconds);
             }
+            stopwatchAll.Stop();
 
+            Console.WriteLine("All time elapsed in minutes: " + stopwatchAll.Elapsed.Minutes);
             Console.ReadLine();
+
+            /*
             Console.WriteLine("Generate random data for mongodb!");
 
             var mongoSettings = Options.Create(new MongoSettings

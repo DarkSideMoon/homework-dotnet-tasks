@@ -9,7 +9,7 @@ namespace Homework.Dotnet.Tasks.Services.Client
     {
         Task<IndexResponse> Add(BookDocument data);
 
-        Task<ISearchResponse<BookDocument>> Search(string title);
+        Task<IEnumerable<BookSuggestResponse>> Search(string searchString);
 
         Task<ISearchResponse<BookDocument>> SearchMatchAll();
 

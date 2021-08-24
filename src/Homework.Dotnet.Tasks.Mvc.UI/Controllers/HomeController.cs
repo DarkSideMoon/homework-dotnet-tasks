@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Homework.Dotnet.Tasks.Contracts;
+using Homework.Dotnet.Tasks.Documents;
 using Homework.Dotnet.Tasks.Mvc.UI.Models;
 using Homework.Dotnet.Tasks.Services.Cache;
+using Homework.Dotnet.Tasks.Services.Client;
 using Homework.Dotnet.Tasks.Services.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +16,13 @@ namespace Homework.Dotnet.Tasks.Mvc.UI.Controllers
     {
         private readonly IPostgresBookRepository _postgresRepository;
         private readonly IStorage<Book> _cacheStorage;
+        private readonly IElasticSearchBookClient _elasticSearchBookClient;
 
-        public HomeController(IPostgresBookRepository postgresRepository, IStorage<Book> cacheStorage)
+        public HomeController(IPostgresBookRepository postgresRepository, IStorage<Book> cacheStorage, IElasticSearchBookClient elasticSearchBookClient)
         {
             _postgresRepository = postgresRepository;
             _cacheStorage = cacheStorage;
+            _elasticSearchBookClient = elasticSearchBookClient;
         }
 
         public IActionResult Index()
@@ -28,6 +33,21 @@ namespace Homework.Dotnet.Tasks.Mvc.UI.Controllers
         public IActionResult Project()
         {
             return View();
+        }
+
+        public async Task<IActionResult> SearchBook(string searchData)
+        {
+            if (string.IsNullOrEmpty(searchData))
+                return View(new List<BookDocument>());
+
+            var books = new List<BookDocument>
+            {
+                new BookDocument
+                {
+                    Title = "test"
+                }
+            };
+            return View(books);
         }
 
         public async Task<IActionResult> Book()

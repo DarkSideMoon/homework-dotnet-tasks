@@ -36,6 +36,8 @@ namespace Homework.Dotnet.Tasks.Documents
         [Text(Name = "AuthorEmail")]
         public string AuthorEmail { get; set; }
 
+        public CompletionField Suggest { get; set; }
+
         // TODO: Make Author inherited in elastic document
         //public Person Author { get; set; }
     }

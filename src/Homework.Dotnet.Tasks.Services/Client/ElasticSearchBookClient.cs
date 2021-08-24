@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Homework.Dotnet.Tasks.Documents;
 using Homework.Dotnet.Tasks.Services.Settings;
@@ -24,6 +25,11 @@ namespace Homework.Dotnet.Tasks.Services.Client
             connectionSettings.DefaultIndex(setting.Value.IndexName);
 
             _client = new ElasticClient(connectionSettings);
+            _client.Indices.Create(setting.Value.IndexName, x =>
+                x.Map<BookDocument>(b =>
+                    b.AutoMap<BookDocument>().Properties(props =>
+                        props.Completion(c => c.Name(n => n.Suggest).Analyzer("simple").SearchAnalyzer("simple"))))
+            );
         }
 
         public async Task<IndexResponse> Add(BookDocument data)
@@ -33,10 +39,38 @@ namespace Homework.Dotnet.Tasks.Services.Client
             return await _client.IndexDocumentAsync(data);
         }
 
-        public async Task<ISearchResponse<BookDocument>> Search(string title)
+        public async Task<IEnumerable<BookSuggestResponse>> Search(string searchString)
         {
-            return await _client.SearchAsync<BookDocument>(s => s.Query(q => q.Match(m => m.Field(f => f.Title).Query(title))));
-            //return await _client.SearchAsync<BookDocument>(x => x.Query(q => q.MatchAll()));
+            var searchResponse = await _client.SearchAsync<BookDocument>(
+                s => s.Index(_setting.Value.IndexName).Suggest(su =>
+                    su.Completion("suggest",
+                        cs => cs.Field(f => f.Suggest).Prefix(searchString).Fuzzy(f => f.Fuzziness(Fuzziness.Auto))
+                            .Analyzer("simple")
+                            .Size(10)
+                            .SkipDuplicates())));
+
+            var suggestions =
+                from suggest in searchResponse.Suggest["suggest"]
+                from option in suggest.Options
+                select new BookSuggestResponse
+                {
+                    Id = option.Id,
+                    SuggestName = option.Text,
+                    Score = option.Score,
+                    Frequency = option.Frequency,
+
+                    BookTitle = option.Source.Title,
+                    BookId = option.Source.Id,
+                    AuthorEmail = option.Source.AuthorEmail,
+                    AuthorLastName = option.Source.AuthorLastName
+                };
+
+            return suggestions;
+        }
+
+        public Task<ISearchResponse<BookDocument>> SearchAll(string searchString)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ISearchResponse<BookDocument>> SearchMatchAll()

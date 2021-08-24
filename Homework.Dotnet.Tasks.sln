@@ -28,13 +28,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{6FADB8
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "environment", "environment", "{44B47F4C-9C60-458C-B274-92644F9462F6}"
-	ProjectSection(SolutionItems) = preProject
-		environment\docker-compose.yml = environment\docker-compose.yml
-		environment\env.grafana = environment\env.grafana
-		environment\env.influxdb = environment\env.influxdb
-		environment\postgres_init.sql = environment\postgres_init.sql
-		environment\telegraf.conf = environment\telegraf.conf
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Homework.Dotnet.Tasks.Mvc.UI", "src\Homework.Dotnet.Tasks.Mvc.UI\Homework.Dotnet.Tasks.Mvc.UI.csproj", "{4BAFB4D9-613C-4CDE-A916-37BC5F410104}"
 EndProject
@@ -56,6 +49,36 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FA71
 	ProjectSection(SolutionItems) = preProject
 		environment\mysql\scripts\db.sql = environment\mysql\scripts\db.sql
 		environment\mysql\scripts\setupCluster.js = environment\mysql\scripts\setupCluster.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "elk", "elk", "{805C6548-EBB1-48C1-B949-CFDAD3E43293}"
+	ProjectSection(SolutionItems) = preProject
+		environment\elk\docker-compose-elk-multi-node.yml = environment\elk\docker-compose-elk-multi-node.yml
+		environment\elk\docker-compose.yml = environment\elk\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tig stack", "tig stack", "{C9B7E859-731A-4539-AC8E-02A0E39AFE8C}"
+	ProjectSection(SolutionItems) = preProject
+		environment\tig stack\docker-compose.yml = environment\tig stack\docker-compose.yml
+		environment\tig stack\env.grafana = environment\tig stack\env.grafana
+		environment\tig stack\env.influxdb = environment\tig stack\env.influxdb
+		environment\tig stack\postgres_init.sql = environment\tig stack\postgres_init.sql
+		environment\tig stack\telegraf.conf = environment\tig stack\telegraf.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres", "postgres", "{CE08985F-783F-4CD1-8B8D-7D74750D1BA0}"
+	ProjectSection(SolutionItems) = preProject
+		environment\postgres\docker-compose.yml = environment\postgres\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis", "redis", "{8770E4A2-F1DE-4EA7-A299-17EA2B00677E}"
+	ProjectSection(SolutionItems) = preProject
+		environment\redis\docker-compose.yml = environment\redis\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongodb", "mongodb", "{7DE6A95E-AEBB-44D2-B80C-02F156A3C887}"
+	ProjectSection(SolutionItems) = preProject
+		environment\mongodb\docker-compose.yml = environment\mongodb\docker-compose.yml
 	EndProjectSection
 EndProject
 Global
@@ -107,6 +130,11 @@ Global
 		{F5B91057-750F-4C48-B274-F95FBE96FEE8} = {2DFE2A42-8701-45E0-9DF6-C4F8B577A35A}
 		{82DD39AD-65B6-46A6-AD2F-C0AF0F8CB771} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 		{FA718024-0DB0-4327-A295-A810788C08C3} = {82DD39AD-65B6-46A6-AD2F-C0AF0F8CB771}
+		{805C6548-EBB1-48C1-B949-CFDAD3E43293} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{C9B7E859-731A-4539-AC8E-02A0E39AFE8C} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{CE08985F-783F-4CD1-8B8D-7D74750D1BA0} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{8770E4A2-F1DE-4EA7-A299-17EA2B00677E} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{7DE6A95E-AEBB-44D2-B80C-02F156A3C887} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}

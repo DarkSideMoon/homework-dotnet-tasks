@@ -1,5 +1,6 @@
 using Homework.Dotnet.Tasks.Contracts;
 using Homework.Dotnet.Tasks.Services.Cache;
+using Homework.Dotnet.Tasks.Services.Client;
 using Homework.Dotnet.Tasks.Services.Repository;
 using Homework.Dotnet.Tasks.Services.Repository.Interfaces;
 using Homework.Dotnet.Tasks.Services.Settings;
@@ -24,8 +25,10 @@ namespace Homework.Dotnet.Tasks.Mvc.UI
 
             services.Configure<RedisSettings>(Configuration.GetSection("redis"));
             services.Configure<PostgresSettings>(Configuration.GetSection("postgres"));
+            services.Configure<ElasticSearchSetting>(Configuration.GetSection("elasticSearch"));
 
             services.AddTransient<IPostgresBookRepository, PostgresBookRepository>();
+            services.AddTransient<IElasticSearchBookClient, ElasticSearchBookClient>();
 
             services.AddSingleton<IRedisConnectionFactory, RedisConnectionFactory>();
             services.AddSingleton<IStorage<Book>>(
