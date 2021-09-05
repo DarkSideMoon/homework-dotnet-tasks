@@ -1,3 +1,4 @@
+# One node of redis
 version: '3.8'
 services:
   redis:

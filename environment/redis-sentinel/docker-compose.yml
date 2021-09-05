@@ -1,0 +1,50 @@
+# Sentinel in Master-Slave setup
+# https://github.com/bitnami/bitnami-docker-redis-sentinel#using-master-slave-setups
+# docker-compose up --scale redis-sentinel=3
+
+version: "3"
+
+services:
+  redis-master:
+    image: "bitnami/redis"
+    container_name: redis-master
+    environment:
+      - REDIS_REPLICATION_MODE=master
+      - REDIS_PASSWORD=str0ng_passw0rd
+    ports:
+      - "6379"
+    networks:
+      - app-tier
+
+  redis-slave:
+    image: "bitnami/redis"
+    environment:
+      - REDIS_REPLICATION_MODE=replica
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PASSWORD=str0ng_passw0rd
+      - REDIS_PASSWORD=str0ng_passw0rd
+    ports:
+      - "6379"
+    depends_on:
+      - redis-master
+    networks:
+      - app-tier
+
+  redis-sentinel:
+    image: "bitnami/redis-sentinel"
+    environment:
+      - REDIS_MASTER_SET=mymaster
+      - REDIS_MASTER_HOST=redis-master
+      - REDIS_MASTER_PASSWORD=str0ng_passw0rd
+      - REDIS_SENTINEL_DOWN_AFTER_MILLISECONDS=10000
+    depends_on:
+      - redis-master
+      - redis-slave
+    ports:
+      - "26379"
+    networks:
+      - app-tier
+
+networks:
+  app-tier:
+    driver: bridge

@@ -73,7 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postgres", "postgres", "{CE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis", "redis", "{8770E4A2-F1DE-4EA7-A299-17EA2B00677E}"
 	ProjectSection(SolutionItems) = preProject
-		environment\redis\docker-compose.yml = environment\redis\docker-compose.yml
+		environment\redis\docker-compose-bitnami.yml = environment\redis\docker-compose-bitnami.yml
+		environment\redis\docker-compose-one-node.yml = environment\redis\docker-compose-one-node.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongodb", "mongodb", "{7DE6A95E-AEBB-44D2-B80C-02F156A3C887}"
@@ -83,7 +84,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongodb", "mongodb", "{7DE6
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ga", "ga", "{4F271E19-5FAF-4A63-AF9D-888616C05F0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactGaApp", "ga\ReactGaApp\ReactGaApp.csproj", "{96994484-52ED-4A4F-A178-F03EB3C21A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactGaApp", "ga\ReactGaApp\ReactGaApp.csproj", "{96994484-52ED-4A4F-A178-F03EB3C21A21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis-sentinel", "redis-sentinel", "{F667FD31-7233-449B-A1DF-E432BCDE52D6}"
+	ProjectSection(SolutionItems) = preProject
+		environment\redis-sentinel\docker-compose.yml = environment\redis-sentinel\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis-master-slave", "redis-master-slave", "{71320457-041F-4009-9531-230178CAC16B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -144,6 +152,8 @@ Global
 		{8770E4A2-F1DE-4EA7-A299-17EA2B00677E} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 		{7DE6A95E-AEBB-44D2-B80C-02F156A3C887} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 		{96994484-52ED-4A4F-A178-F03EB3C21A21} = {4F271E19-5FAF-4A63-AF9D-888616C05F0F}
+		{F667FD31-7233-449B-A1DF-E432BCDE52D6} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{71320457-041F-4009-9531-230178CAC16B} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}
