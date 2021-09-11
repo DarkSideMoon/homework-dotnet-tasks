@@ -13,6 +13,16 @@ namespace Homework.Dotnet.Tasks.Services.Cache
 
         Task<TItem> GetOrSet(string key, Func<Task<TItem>> func);
 
+        /// <summary>
+        /// Probabilistic early expiration
+        /// https://en.wikipedia.org/wiki/Cache_stampede
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="func"></param>
+        /// <param name="timeExpire"></param>
+        /// <param name="beta"></param>
+        /// <returns></returns>
+        Task<TItem> GetOrSetProbabilisticItem(string key, Func<Task<TItem>> func, TimeSpan timeExpire, int beta = 1);
 
         Task<TItem> GetItem(string key);
 

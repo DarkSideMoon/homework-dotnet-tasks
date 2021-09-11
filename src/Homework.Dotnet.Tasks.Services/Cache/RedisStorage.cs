@@ -15,14 +15,16 @@ namespace Homework.Dotnet.Tasks.Services.Cache
         private readonly IDistributedCache _redisCache;
         private readonly IRedisConnectionFactory _factory;
 
-        public RedisStorage(IDistributedCache redisCache)
-        {
-            _redisCache = redisCache;
-        }
-
         public RedisStorage(IRedisConnectionFactory factory)
         {
             _factory = factory;
+        }
+
+        #region No in use
+
+        public RedisStorage(IDistributedCache redisCache)
+        {
+            _redisCache = redisCache;
         }
 
         /// <summary>
@@ -77,6 +79,40 @@ namespace Homework.Dotnet.Tasks.Services.Cache
 
             await _redisCache.SetAsync(BuildKey(key), byteArray);
             return result;
+        }
+
+        #endregion
+
+        public async Task<TItem> GetOrSetProbabilisticItem(string key, Func<Task<TItem>> func, TimeSpan timeExpire, int beta = 1)
+        {
+            var redis = await _factory.ConnectAsync();
+            var database = redis.GetDatabase();
+
+            var stringResultWithExpiry = await database.StringGetWithExpiryAsync(new RedisKey(BuildKey(key)));
+
+            if (stringResultWithExpiry.Value.HasValue)
+                return JsonConvert.DeserializeObject<TItem>(stringResultWithExpiry.Value);
+
+            var deltaInSeconds = TimeSpan.FromSeconds(60);
+
+            var keyTimeExpire = stringResultWithExpiry.Expiry ?? TimeSpan.FromSeconds(300);
+            var subtractPeriod = deltaInSeconds * beta * Math.Log(new Random().NextDouble());
+
+            if (!stringResultWithExpiry.Value.HasValue ||
+                DateTime.Now.Subtract(subtractPeriod).Ticks >= keyTimeExpire.Ticks)
+            {
+                var start = DateTime.Now;
+
+                var result = await func();
+                var serializedStringObj = JsonConvert.SerializeObject(result);
+
+                deltaInSeconds = DateTime.Now - start;
+
+                await database.StringSetAsync(BuildKey(key),
+                    new RedisValue(JsonConvert.SerializeObject(serializedStringObj + $"[delta]:[{deltaInSeconds}]")), timeExpire);
+            }
+
+            return default;
         }
 
         public async Task<TItem> GetItem(string key)
