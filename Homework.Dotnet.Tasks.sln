@@ -92,6 +92,32 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis-sentinel", "redis-sen
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis-master-slave", "redis-master-slave", "{71320457-041F-4009-9531-230178CAC16B}"
+	ProjectSection(SolutionItems) = preProject
+		environment\redis-master-slave\docker-compose.yml = environment\redis-master-slave\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ngnix", "ngnix", "{5E3920D0-9330-4E3B-BAF2-66840D448319}"
+	ProjectSection(SolutionItems) = preProject
+		environment\ngnix\docker-compose.yml = environment\ngnix\docker-compose.yml
+		environment\ngnix\favicon.ico = environment\ngnix\favicon.ico
+		environment\ngnix\nginx-cache.conf = environment\ngnix\nginx-cache.conf
+		environment\ngnix\nginx-images.conf = environment\ngnix\nginx-images.conf
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ngnix", "ngnix", "{ACD190A7-FD92-4BE9-8232-27D1F41944EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lua", "lua", "{4B46931D-5A5D-4C24-B2C8-C442A1899446}"
+	ProjectSection(SolutionItems) = preProject
+		environment\ngnix\lua\purge.lua = environment\ngnix\lua\purge.lua
+		environment\ngnix\lua\purge_all.lua = environment\ngnix\lua\purge_all.lua
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{161E8B74-FFAE-4D1D-A5A8-5C65C9A7260A}"
+	ProjectSection(SolutionItems) = preProject
+		environment\ngnix\scripts\clear.sh = environment\ngnix\scripts\clear.sh
+		environment\ngnix\scripts\init.sh = environment\ngnix\scripts\init.sh
+		environment\ngnix\scripts\watch.sh = environment\ngnix\scripts\watch.sh
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -154,6 +180,9 @@ Global
 		{96994484-52ED-4A4F-A178-F03EB3C21A21} = {4F271E19-5FAF-4A63-AF9D-888616C05F0F}
 		{F667FD31-7233-449B-A1DF-E432BCDE52D6} = {44B47F4C-9C60-458C-B274-92644F9462F6}
 		{71320457-041F-4009-9531-230178CAC16B} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{5E3920D0-9330-4E3B-BAF2-66840D448319} = {44B47F4C-9C60-458C-B274-92644F9462F6}
+		{4B46931D-5A5D-4C24-B2C8-C442A1899446} = {5E3920D0-9330-4E3B-BAF2-66840D448319}
+		{161E8B74-FFAE-4D1D-A5A8-5C65C9A7260A} = {5E3920D0-9330-4E3B-BAF2-66840D448319}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F24AFE0D-EF26-4ADE-8654-21D13F989838}
