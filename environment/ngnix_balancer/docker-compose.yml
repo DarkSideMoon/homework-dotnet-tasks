@@ -1,0 +1,45 @@
+version: '3.5'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  nginx-load-balancer:
+    build:
+      context: ./load-balancer
+    volumes:
+      - ./load-balancer/nginx.conf:/etc/nginx/nginx.conf
+      - ./load-balancer/us.conf:/etc/nginx/us.conf
+      - ./load-balancer/uk.conf:/etc/nginx/uk.conf
+    ports:
+      - "80:80"
+    networks:
+      - default
+
+  uk:
+    image: nginx:latest
+    volumes:
+      - ./node/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80
+    networks:
+      - default
+
+  us:
+    image: nginx:latest
+    volumes:
+      - ./node/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80
+    networks:
+      - default
+
+  default1:
+    image: nginx:latest
+    volumes:
+      - ./node/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80
+    networks:
+      - default
