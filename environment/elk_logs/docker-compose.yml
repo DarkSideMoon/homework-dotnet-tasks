@@ -1,0 +1,67 @@
+version: '3.8'
+
+volumes:
+  filebeatdata-mysql: { }
+  fbdata-ls: { }
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.1
+    environment:
+      - node.name=es01
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms4096m -Xmx4096m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.14.1
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://elasticsearch:9200"
+    ports:
+      - "5601:5601"
+
+  filebeat-mysql:
+    hostname: filebeat
+    user: root
+    image: docker.elastic.co/beats/filebeat:7.14.1
+    volumes:
+      - ./config/filebeat-mysql.yml:/usr/share/filebeat/filebeat.yml
+      - ./db/logs:/var/log/mysql/
+      - filebeatdata-mysql:/usr/share/filebeat/data/
+    command: filebeat -strict.perms=false
+    restart: on-failure
+
+  db:
+    image: mysql:5
+    entrypoint: ""
+    command: bash -c "chown -R mysql:mysql /var/log/mysql && exec /entrypoint.sh mysqld"
+    volumes:
+      - "./db/my.cnf:/etc/mysql/my.cnf"
+      - "./db/data:/var/lib/mysql:rw"
+      - "./db/logs:/var/log/mysql/"
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      MYSQL_DATABASE: test
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: P@ssw0rd
+
+  logstash:
+    image: logstash:7.14.1
+    ports:
+      - '5000:5000'
+    volumes:
+      - type: bind
+        source: ./config/logstashapp.conf
+        target: /usr/share/logstash/pipeline/logstashapp.conf
+        read_only: true

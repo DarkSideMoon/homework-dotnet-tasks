@@ -1,14 +1,30 @@
+/*
+ * Difference between logstash and filebeat 
+ * https://stackoverflow.com/questions/58585855/difference-between-using-filebeat-and-logstash-to-push-log-file-to-elasticsearch
+ * https://www.educba.com/filebeat-vs-logstash/
+ * https://logz.io/blog/filebeat-vs-logstash/
+ */
+
+/*
+ * Other resources
+ * https://logz.io/blog/logstash-tutorial/
+ * https://logz.io/blog/filebeat-vs-logstash/
+ */
+
 using HealthChecks.UI.Client;
 using Homework.Dotnet.Tasks.Host.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace Homework.Dotnet.Tasks.Host
 {
     public class Startup
     {
+        private static readonly ILogger _logger = Log.ForContext<Startup>();
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -18,6 +34,8 @@ namespace Homework.Dotnet.Tasks.Host
 
         public void ConfigureServices(IServiceCollection services)
         {
+            _logger.Information("Application is starting...");
+
             services.ConfigureCore();
 
             services.AddSwaggerService();
@@ -29,6 +47,8 @@ namespace Homework.Dotnet.Tasks.Host
             services.ConfigureServiceHealthChecks(Configuration);
 
             services.ConfigureServiceMetrics();
+
+            _logger.Information("Application is started...");
         }
 
         public void Configure(IApplicationBuilder app)

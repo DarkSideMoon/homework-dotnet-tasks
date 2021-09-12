@@ -1,0 +1,13 @@
+filebeat.modules:
+  #Mysql module consumes error and mysql-slow logs from mounted volume
+  - module: mysql
+    error:
+      var.paths: [ "/var/log/mysql/error.log*" ]
+    slowlog:
+      var.paths: [ "/var/log/mysql/mysql-slow.log*" ]
+
+#All data to indexed to Elasticsearch
+output.elasticsearch:
+  hosts: [ "elasticsearch:9200" ]
+  indices:
+    - index: "mysql-%{+yyyy.MM.dd}"
