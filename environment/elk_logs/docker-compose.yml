@@ -56,6 +56,32 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: P@ssw0rd
 
+  graylog:
+    image: graylog/graylog:4.1
+    volumes:
+      - ./config/graylog.conf:/usr/share/graylog/data/config/graylog.conf
+      - ./db/logs:/var/log/mysql/
+      - filebeatdata-mysql:/usr/share/filebeat/data/
+    env_file:
+      - ./env/graylog
+    environment:
+      - GRAYLOG_IS_MASTER=true
+      - GRAYLOG_WEB_ENDPOINT_URI=http://${HOST_IP}:9000/api
+    links:
+      - elasticsearch
+    depends_on:
+      - db
+      - elasticsearch
+    ports:
+      # Graylog web interface and REST API
+      - 9000:9000
+      # Beats
+      - 5044:5044
+      # GELF TCP
+      - 12201:12201
+      # GELF UDP
+      - 12201:12201/udp
+
   logstash:
     image: logstash:7.14.1
     ports:

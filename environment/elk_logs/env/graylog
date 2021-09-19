@@ -1,0 +1,9 @@
+# Graylog2 environments
+# http://docs.graylog.org/en/2.4/pages/configuration/server.conf.html
+TZ=Europe/Kiev
+GRAYLOG_ROOT_TIMEZONE=Europe/Kiev
+# Use pwgen -N 1 -s 48
+GRAYLOG_PASSWORD_SECRET=HalWOabaZewE6O4YuHo63wvLP9cBqCmUDV9SMTQ8uTuiCtsl"
+# Default Password: admin
+GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+GRAYLOG_ELASTICSEARCH_HOSTS=http://elasticsearch:9200
