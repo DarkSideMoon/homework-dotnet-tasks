@@ -1,0 +1,24 @@
+version: '3.7'
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  attacker:
+    build: ./attacker
+    networks:
+      - default
+    command: ["bash", "-c",  "while true; do echo 'Hit CTRL+C'; sleep 1; done"]
+
+  # https://blackdiver.net/it/security/3903
+
+  defender:
+    image: nginx
+    volumes:
+    - ./:/usr/share/nginx/html
+    ports:
+    - 80:80
+    - 53
+    networks:
+      - default
