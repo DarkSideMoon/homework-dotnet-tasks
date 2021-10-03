@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  postgresql-master:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: my_password
+    ports:
+      - '5432:5432'
+    volumes:
+      - './master/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d'
+    depends_on:
+      - postgresql-shard0
+      - postgresql-shard1
+
+  postgresql-shard0:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: my_password
+      SHARD_INDEX: 0
+    ports:
+      - '5433:5432'
+    volumes:
+      - './shard/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d'
+
+  postgresql-shard1:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: my_password
+      SHARD_INDEX: 1
+    ports:
+      - '5434:5432'
+    volumes:
+      - './shard/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d'
