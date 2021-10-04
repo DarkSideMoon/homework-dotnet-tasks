@@ -6,8 +6,8 @@
 
 | OS                        | Status                                                                                                                                                 |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Windows win10-x64         | [![Build status](https://ci.appveyor.com/api/projects/status/q35imesu50g2flpg?svg=true)](https://ci.appveyor.com/project/Greenwood/metrics-dotnet-samples) |
-| Linux Ubuntu 16.04        | [![Build Status](https://www.travis-ci.com/DarkSideMoon/homework-dotnet-tasks.svg?branch=master)](https://www.travis-ci.com/DarkSideMoon/homework-dotnet-tasks) |
+| Windows win10-x64         | [![Build status](https://ci.appveyor.com/api/projects/status/tnus6a0u618o3qyc?svg=true)](https://ci.appveyor.com/project/Greenwood/homework-dotnet-tasks) |
+| Linux Ubuntu 16.04        | [![Build Status](https://app.travis-ci.com/DarkSideMoon/homework-dotnet-tasks.svg?branch=master)](https://app.travis-ci.com/DarkSideMoon/homework-dotnet-tasks) |
 | .NET Core Linux           | ![Build Status](https://github.com/DarkSideMoon/metrics-dotnet-samples/actions/workflows/dotnet-core-linux.yml/badge.svg) |
 | .NET Core Windows         | ![Build Status](https://github.com/DarkSideMoon/metrics-dotnet-samples/actions/workflows/dotnet-core-windows.yml/badge.svg) |
 
