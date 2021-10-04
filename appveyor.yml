@@ -4,5 +4,6 @@ build_script:
   - ps: dotnet --info
   - ps: dotnet restore Homework.Dotnet.Tasks.sln
   - ps: dotnet build Homework.Dotnet.Tasks.sln
+  - ps: dotnet test ./tests/Homework.Dotnet.Tasks.Unit.Tests/Homework.Dotnet.Tasks.Unit.Tests.csproj
 
 version: 0.0.1.{build}
