@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  homework-dotnet-tasks:
+    build: 
+      context: ./
+      dockerfile: ./src/Homework.Dotnet.Tasks.Host/Dockerfile
+    image: darksidemoon/homework.dotnet.tasks:${BUILD_VERSION}

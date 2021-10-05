@@ -21,5 +21,13 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
+**/environment
+**/benchmarks
+**/.github
+**/data
+**/tests
+**/ga
+.travis.yml
+appveyor.yml
 LICENSE
 README.md

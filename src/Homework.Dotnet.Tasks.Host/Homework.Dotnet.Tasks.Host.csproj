@@ -17,6 +17,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="style\dotnet.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="style\dotnet.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="App.Metrics.InfluxDB" Version="4.2.0" />
     <PackageReference Include="AspNetCore.HealthChecks.Elasticsearch" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="5.0.1" />
