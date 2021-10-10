@@ -1,0 +1,1 @@
+echo "Current process user is $(whoami)"

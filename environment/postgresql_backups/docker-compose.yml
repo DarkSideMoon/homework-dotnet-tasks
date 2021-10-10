@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  pg_master:
+    image: postgres:13
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    container_name: pg_master
+    env_file:
+      - ./conf/db.env
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./conf/master.conf:/etc/postgresql/postgresql.conf
+      - ./conf/schema.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./conf/master_pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./scripts/test.sh:/docker-entrypoint-initdb.d/test.sh:ro
+      - vol-master-db:/var/lib/postgresql/data/
+      - vol-backup-wal:/backup
+
+  pg_slave:
+    image: postgres:13
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    container_name: pg_slave
+    env_file:
+      - ./conf/db.env
+    ports:
+      - '6432:5432'
+    volumes:
+      - vol-slave-db:/var/lib/postgresql/data/
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - pg_master
+    ports:
+      - "8080:8080"
+
+volumes:
+  vol-master-db:
+    external: true
+  vol-slave-db:
+    external: true
+  vol-backup-wal:
+    external: true
