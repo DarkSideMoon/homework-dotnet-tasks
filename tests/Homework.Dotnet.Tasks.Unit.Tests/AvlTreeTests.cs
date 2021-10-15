@@ -9,12 +9,12 @@ namespace Homework.Dotnet.Tasks.Unit.Tests
     {
         public static int[] AvlTreeCases =
         {
-            1,
             10,
             100,
             1000,
             10000,
-            100000
+            100000,
+            1000000
         };
     }
 

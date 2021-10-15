@@ -1,4 +1,5 @@
-﻿using Beanstalk.Core;
+﻿/*
+using Beanstalk.Core;
 using System;
 using System.Threading.Tasks;
 
@@ -43,3 +44,4 @@ namespace Homework.Dotnet.Tasks.Services.Queue.Beanstalk
         }
     }
 }
+*/

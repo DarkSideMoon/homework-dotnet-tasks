@@ -9,8 +9,6 @@ namespace Homework.Dotnet.Tasks.Unit.Tests
     {
         public static int[] CountingSortCases =
         {
-            10,
-            100,
             1000
         };
     }

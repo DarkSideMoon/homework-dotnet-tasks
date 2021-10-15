@@ -4,6 +4,17 @@ using System.Collections.Generic;
 
 namespace Homework.Dotnet.Tasks.Services.Algorithms
 {
+    /// <summary>
+    /// Results:
+    /// |             Method |   Items |        Mean |     Error |    StdDev |      Gen 0 |      Gen 1 |     Gen 2 | Allocated |
+    /// |------------------- |-------- |------------:|----------:|----------:|-----------:|-----------:|----------:|----------:|
+    /// | CreateInt32AvlTree |  100000 |    23.25 ms |  0.292 ms |  0.259 ms |  1125.0000 |   468.7500 |  156.2500 |      6 MB |
+    /// | CreateInt32AvlTree |  500000 |   134.75 ms |  1.806 ms |  1.601 ms |  5500.0000 |  2250.0000 |  500.0000 |     31 MB |
+    /// | CreateInt32AvlTree | 1000000 |   241.05 ms |  1.027 ms |  0.961 ms | 10000.0000 |  3000.0000 |         - |     61 MB |
+    /// | CreateInt32AvlTree | 2000000 |   513.85 ms |  1.945 ms |  1.819 ms | 20000.0000 |  7000.0000 |         - |    122 MB |
+    /// | CreateInt32AvlTree | 3000000 |   959.42 ms |  6.987 ms |  6.535 ms | 31000.0000 | 11000.0000 | 1000.0000 |    183 MB |
+    /// | CreateInt32AvlTree | 5000000 | 1,709.17 ms | 19.262 ms | 16.085 ms | 52000.0000 | 18000.0000 | 1000.0000 |    305 MB |
+    /// </summary>
     public class AvlTree<T> : ICollection<T>, IList<T> where T : IComparable<T>
     {
         public class TreeNode : ICollection<T>, IList<T>
