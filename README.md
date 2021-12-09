@@ -1,4 +1,4 @@
-# Repository for homework tasks :mortar_board:
+# Repository for homework dotnet tasks :mortar_board:
 
 [![forthebadge](https://forthebadge.com/images/badges/made-with-c-sharp.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/makes-people-smile.svg)](https://forthebadge.com)
