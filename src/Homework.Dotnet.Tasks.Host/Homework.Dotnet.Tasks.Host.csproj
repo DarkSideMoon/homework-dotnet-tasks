@@ -45,7 +45,7 @@
     <PackageReference Include="Serilog.Formatting.Elasticsearch" Version="8.4.1" />
     <PackageReference Include="Serilog.Sinks.Http" Version="7.2.0" />
 
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="5.0.0" />
   </ItemGroup>
