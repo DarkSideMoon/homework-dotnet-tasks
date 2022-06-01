@@ -23,7 +23,7 @@
     <PackageReference Include="StackExchange.Redis" Version="2.2.62" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="MySql.Data" Version="8.0.27" />
-    <PackageReference Include="MySqlConnector" Version="1.3.11" />
+    <PackageReference Include="MySqlConnector" Version="2.1.9" />
   </ItemGroup>
 
   <ItemGroup>
